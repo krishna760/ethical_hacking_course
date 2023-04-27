@@ -1,0 +1,1250 @@
+hashing is completely independent to encryption and decryption
+-CIA trial
+Confidentiality is acheive by encryption and decryption
+Integrity is acheived by hashing
+Availablity is acheived by
+#IDS, Firewalls and Honeypots
+i) Introduction to Firewall concepts
+Firewall are hardware and/or software designed to prevent unauthorized access to or from a private network.
+They are placed at the junction or gateway between the two networks, which is usually a private network and a public network such as the internet.
+Firewall examine all message entering or leaving the intranet and blocks those that do not meet the specified security criteria.
+Firewalls may be concerned with the type of traffic or with the source or destination addresses and ports.
+ii) Firewall Architecture
+-Bastion Host:
+Bastion host is a computer system designed and configured to protect network resources from attack.
+Traffic entering or leaving the network passes through the firewall, it has two interfaces:
+ Public interface directly connected to the Internet.
+ Private interface connected to the Intranet.
+-Screened Subnet or DeMilitarized Zone:
+The screened subnet or DMZ(additional zone) contains hosts that offer public services.
+The DMZ zone responds to public requests, and has no hosts accessed by the private network.
+Private aone can not be accessed by Internet users.
+-DeMilitarized Zone:
+DMZ exposes an organization's external-facing services to an untrusted network, ehile rest of the organization's network is firewalled.
+DMZ is a network that serves a a buffer between the internal secure network and insecure Internet.
+It can be created using firewall with three or more network interfaces assigned with specific roles such as Internal trusted network, DMZ network, and external un-trusted network.
+iii) Types Of Firewalls
+-Packet Filtering Firewall
+Packet filtering firewalls work at the network layer of the OSI model(or the IP layer or TCP/IP) they are usually a part of a router.
+In a packet filtering firewall, each packet is compared to a set of criteria before it is forwarded.
+Depending on the packet and the criteria, the firewall can drop the packet and forward it, or send a message to the originator.
+Rules can include the source and destination IP address, the source and the destination port number, and the protocol used.
+-Circuit-Level Gateway Firewall
+Circuit-level gateways work at the session layer of the OSI model(or the TCP layer of TCP/IP)
+Information passed to a remote computer through  a circuit-level gateway appears to have originated from a gateway
+They monitor requests to create sessions, and determine if those sessions will be allowed.
+Circuit proxy firewalls allow or prevent data streams, they do not filter individual packets.
+-Application-Level firewall
+Application-level gateways(proxies) can filter packets at the application layer of the OSI model(or the application layer of TCP/IP)
+Incoming and outgoing traffic is restricted to services supported by proxy; all other service requests are denied.
+Application-level gateways configured as a web proxy prohibit FTP. gopher. telnet or other traffic.
+Application-level gateways examine traffic and filter on application-specific commands such as http:post and get.
+-Stateful Multilayer Inspection Firewall
+Stateful multilayer inspection firewalls combine the aspects of the other three types of firewalls
+They filter packets at the network layer of the OSI model(or the IP layer of TCP/IP), to determine whether session packets are legitimate, and they evaluate the contents of packets at the application layer.
+SPI makes decisions also on the SYN, ACK, sequence numbers and other data contained in the TCP header
+SPI firewalls track the state of each session and can dynamically open and close ports as specific sessions require.
+iv) Introduction to IDS and IPS
+A firewall acts as a barrier between the internal network and the external network (usually the internet). It can block traffic based on predefined rules or policies, and can also perform tasks such as NAT (network address translation) to hide the internal IP addresses. Firewalls can be implemented in hardware or software and can be placed at different points in a network to protect different segments of it.
+
+On the other hand, an IDS is a system that analyzes network traffic and system logs to identify signs of intrusion or suspicious activity. It can detect and alert the system administrators about attacks, malware, or other anomalies. IDS can operate in a passive or active mode. In passive mode, it only monitors the network traffic, while in active mode, it can take actions to stop the attack or isolate the affected system.
+v) IDS Detection Techniques
+-Signature based Recongnition
+Signature-based IDS setects the attacks on the basis of the specific patterns such as number of bytes or number of 1's or number of 0's in the network traffic.
+It detects on the basis of the already known malicious instruction sequence that is used by the malware. It uses a database of 1000s of predefined signatures.
+Advantage: High procession rate and quick response.
+Drawback: Only detects already known patterns, fails to detect zero-day exploits.
+-Anomaly based Recognition
+Primarily introduced to detect unknown attacks, it uses machine learning to create a trustful activity model and anything coming is compared with that model and it is declared suspicious if is not found in model.
+Advantage: Can detect zero-day attacks
+Drawback: False positives, resource and time intensive.
+-Stateful Protocol based Recognition
+vi) Types Of IDS
+-Network-Based Intrusion Detection Systems:
+These mechanisms typically consist of a black box that is placed on the network in the promiscuous mode, listening for patterns indicative of an intrudection.
+It detects ,alicious activity such as Denial-of Service attacks, port scans, or even attempts to crack into computers by monitoring network traffic.
+-Host-Based Intrusion Detection Systems:
+These mechanisms usually include auditing for events that occur on a specific host.
+These are not as common, due to the overhead they incur by having to monitor each system event.
+vii) IDS vs Firewall vs IPS
+
+viii) Firewall Walkthrough
+ix) Introduction to Snort
+Snort is an open source network intrusion detection system, capable of performing real-time traffic analysis and packet logging on IP networks.
+It can perform protocol analysis and content searching/matching, and is used to detect a variety of attacks and probes, such as buffer overflows, stealth port scans, CGI attacks, SMB probes, and OS fingerprinting attempts.
+It uses flexible rules language to describe traffic that it should collect or pass, as well as a detection engine that utilizes a modular plug-in architecture.
+x) How Snort Works
+Snort rules syntax:
+alert tcp any any ->192.168.1.0/24 111 (content: "00 01 86 a5";msg:"mountd access";)
+alert:Rule Action
+tcp:Rule Protocol
+->:Rule Formate Diretion
+192.168.1.0/24:Rule IP address
+111:Rule Port
+content:"00 01 86 a5":Payload detection rule
+msg:"mountd access":Alert message
+xi) Snort Installation And Walkthrough
+sudo apt-get install snort
+xii) Working with Snort creating Custom Rules and Testing
+nano snort.rules
+xii)Snort Detecting Common Attacks
+xiii) Evading IDS
+-Payload obfuscation
+-Encoding and encryption
+Application layer protocols like HTTP allow for multiple encodings of data which are interpreted as the same value. For example, the string "cgi-bin" in a URL can be encoded as "%63%67%69%62%69%6e" (i.e hexadecimal). An IDS must be aware of all of the possible encodings that its end hosts accept.
+Attacks on encrypted protocols such as HTTPS cannot be read by an IDS unless the IDS has a copy of the private key used by the server to encrypt the communication. The IDS won't be able to match the encrypted traffic to signatires if it does't account for this.
+-Polymorphism
+To obfuscate their attacks, attackers can use polymorphic shellcode to create unique attack patterns. This technique typically involves encoding the payload in some fashion(e.g, XOR-ing each byte with 0*95), then placing a decoder in front of the payload before sending it.
+When the target executes the code, it runs the decoder which rewrites the payload into its original form which the target then executes.
+Polymorphism attacks don't have single detectable signature, making them very difficult for detection.
+for e.g: <script>alert()</script> ==>> atob("PHNjcmlwdD5hbGVydCgpPC9zY3JpcHQ+")
+-Methods
+Fragmentation and small packets
+Overlapping fragments and TCP segments
+Protocol ambiguities
+Low-bandwidth attacks
+-DoS bug in IDS
+If the attackers know IP addresses of this centralized logging server, they can launch a denial-of-service attack on that server so that the IDS won't be able to log any more events.
+-Session splicing
+Attacker splits the attack traffic in to many packets such that no single packet triggers the IDS.
+If attackers are aware of delay in packet reassembly, they can add delays between packet transmissions to bypass the reassembly.
+xiv) Bypassing our IDS Rules of snort
+double encoding
+Polymorphism
+xv) Evading Firewalls
+-SSH Tunnling
+SSH tunnelling is a somewhat like VPN. In VPN you connect to a VPN server
+and all your traffic is encrypted and gets routed through that server.
+The premise is same but instead of a VPN server you have your home PC or router, acting as a server, for traffic routing and it takes few more steps to setup.
+The client side computer will connect to an SSH server through port 22. MOst forewalls show communication over port 22, as it id the port used by HTTPS and also uses the same port so most firewalls allow it.
+OPENSSH: Attackers use OpenSSH to encrypt and tunnel all the traffic from a local machine to a remote machine to avoid detection by perimeter security controls.
+-IPSpoofing
+-Source Routing
+When using source routing, the attacker designated route a packet should take through the network in such a way that the designated route should bypass the firewall antirely, evading any restrictions the firewall ha in place.
+Through the use of source routing, it is entirely possible for the attcker to specify the route he wises the packet to use, instead of leaving it up to the routing protocol the organization has in place.
+This technique may also enable an attacker to reach a target host that is normally RFC 1918 IP addresses that should not be present on the Internet.
+When combined with IP address spoofing, the attacker may have the ability to use a spoofed source and still receive a response. Source routing also known as path addressing.
+-ICMP Tunneling
+ICMP tunneling works by injecting arbitrary data into an echo packet sent to a remote computer. The remote computer replies in the same manner, injecting an answer into another ICMP packet and sending it back. The client performs all communication using ICMP echo request packets, while the proxy uses echo reply packets.
+-Mitigations: DPI--DeepPacket Inspection
+Wheareas the conventional packet inspections read the metadata of the packet(mainly headers), Deep packet inspection reads the contents of a packet that is going through it in real time.
+Most DPI tools rely on a signatures database -- if there is no signature relevant for ICMP messages, it won't detect the ICMP Tunnel.
+Even if there is a relevant signature at the database, the operator should first configure it to be in an active mode.
+-HTTP Tunneling
+HTTP tunneling is used to create a network link between two computers including restrictions like firewalls, NATs and ACLs, etc.. The tunnel is created by an intermediary called a proxy server which is usually located in s DMZ
+Tunneling can also allow communication using a protocol that normally wouldn't be supported on the restriction network
+HTTP tunneling performs protocol encapsulation, by enclosing dta packets of one protocol(SOAP, JRMP etc) within HTTP Packets
+The HTTP packets are then sent across the firewall as normal internet traffic.
+The most common form of HTTP tunneling is the standardized HTTP CONNECT method.
+This mechanism is how a client behiend an HTTP proxy can access websites using SSL or TLS(i.e HTTPS)
+xvi) Simple Firewall Evasion Techniques
+snort -A console -q -c /etc/snort/snort.conf -i ens33 -k none
+hping3 -p 80 192.168.70.129 -a 192.168.70.130
+xvii) ICMP Tunneling
+hping3 -1 -E php-reverse-shell.php -u -d 1000 192.168.70.129
+ICMP (Internet Control Message Protocol) tunneling is a technique that involves encapsulating arbitrary data packets within ICMP packets. The primary purpose of ICMP packets is to send error messages and operational information about network conditions. However, attackers can use ICMP tunneling to bypass security controls and exfiltrate data from a network.
+xviii) SSH Tunneling
+SSH tunneling, also known as SSH port forwarding, is a technique used to establish a secure, encrypted connection between a client and a server through an intermediary or proxy server.
+xix)Introduction to Honeypots
+Honeypots are decoy systems or applications that are designed to attract and monitor attempts at unauthorized access or attack by potential intruders or hackers. They are used to detect, deflect, and analyze attacks in order to gain insight into the tactics, tools, and motives of attackers, as well as to protect real production systems from being compromised.
+A honeypot is a company saying: "Look at me, I'am vulnerable and full of confidential information - why don't you attack me, instead of our real systems?"
+xx)More on Honeypots
+-Low-interaction method
+In this method you will be using fake data, folders, and databases as bait with intent of monitoring attacks  to see what would happen in a real-life data breaching scenario.
+Of course, they would have access to other peripheral information sets like IP addresses, username and password - over which the administrators keep a keen eyes.
+It only provides certain fake services but it's no real operating system that an attacker can operate on, were designed to emulated vulnerable services.
+-High interaction mode
+In this setup you would allow the attackers to interact with data, software, services, and hardware that appear to be as realistic as possible. The intent here is to gauge and capture the skills of the attackers.
+This setup is mostly used in research scenarios where the results of the studies are used to improve the defence capabilities of anti-virus and anti-malware
+Nothing in a high interaction honeypot is emulated, its all real. Therefore, a higher complexity and maintainance is involved.
+-Protect yourself
+Never use real data
+never connect your honeypot to your main network
+use virtual machines
+Firewalls and routers should be the only way to get to your honeypot
+Usernames and roles hsould be unique to the honeypot
+Always test, test and test
+xxi) Types of Honeypots
+-Corporate honeypot
+This is a honeypot that is set up in a production environment and servers as a toll for studying attacks with the purpose of using the knowledge to futher strength the networks security
+-Honeypots for research
+This type of honey pots is more focused on researching the motives of an attacker. This typically use different configurations to lure the attackers in. For example, a research to find out what type of exploits people on the internet would at specific system, and to create defensive soluctions for future.
+xxii) Honeytokens
+Honeytokens are a cybersecurity technique used to detect unauthorized access to sensitive information or systems. They are essentially fake credentials or data that are created and intentionally left vulnerable to attack, but have no real value or access privileges. The purpose of honeytokens is to act as an early warning system, allowing security teams to quickly detect and respond to unauthorized access attempts.
+
+Honeytokens can take many forms, such as fake user accounts, false documents or files, or even entire fake systems. They are often placed in locations that are likely to be targeted by attackers, such as on servers or in email accounts. When an attacker attempts to access the honeytoken, it triggers an alert that is sent to the security team, who can then investigate and take action to prevent any further access.
+xxiii) HoneyBOT Walkthrough
+A honeypot is a device placed on a computer network specifically designed to capture malicious network traffic. The logging capability of a honeypot is far greater than any other network security tool and captures raw packet level data even including the keystrokes and mistakes made by hackers. The captured information is highly valuable as it contains only malicious traffic with little to no false positives.
+Honeypots are becoming one of the leading security tools used to monitor the latest tricks and exploits of hackers by recording their every move so that the security community can more quickly respond to new exploits.
+xxiv) Evading Honeypots
+xxv) Linux Based Honeypot
+
+#Wireless Pentesting
+i)Introduction to Wireless Networks
+-History
+1973-Ethernet 802.3
+1991-2G cell phone network
+june 1997-802.11 "Wifi" protocol first release
+1999-803.11 VoIP integration
+-advantages
+installation is fast
+cheaper
+access to the network can be from anywhere
+easier connectivity
+-disadvantages
+security is big issue
+increase bandwidth
+wifi enhancement can require new wireless carrds and/or access points
+ii)Wireless Terminologies
+GSM:Universal system used for mobile transportation for wireless network worldwide.
+Bandwidth: Describes the amount of information that may be broadcasted over a connection or a range within a band of frequencies
+BSSID: Ahe MAC address of an access point that has set up a Basic Service Set(BSS)
+ISM band: A set of frequency for the international Industrial, Scientific, and Medical communities.
+Access Point: Used to connect wireless devices to a wireless network
+Hotspot: Places where wireless network is available for public use.
+Association: The process of connecting a wireless device to an access point.
+Orthogonal Frequency-division Multiplexing(OFDM): Method of encoding digital data on multiple carrere frequncies.
+Direct-sequence Spread Spectrum(DSSS): Original data signal is multiplied with a pseudo random noise spreading code.
+Frequency-hopping Spread Spectrum(FHSS): Method of transmitting radio signals by rapidly switching a carrier among many frequency channels.
+-Wifi Networks at home and public places:
+Wifi at home: Wifi networks at home allow you to be whereever you want with your laptop, iPad or handheld device, and not have to make holes for or hide Ethernet cables.
+-Wifi at public places: You can find free/paid Wi-Fi access available in coffee shops, shopping malls, booksstores, offices, airport terminals, schools, hotels, and other public places.
+iii)Types Of Wireless Networks
+-Wireless PAN
+Wireless personal area networks(WPANs) connect devices within a relatively small area, typically within a range of 10 meters.
+For example, both Bloothtooth radio and invisible infrarer light provides a WPAN for interconnecting a headset to a laptop
+-Wireless LAN
+A wireless local area network(WLAN) links two or more devices over a short distance using a wireless distribution method, 150 feet indoors and 300 feet outdoors, usually providing a connection through an access point for internet access.
+The use of spread-spectrum or OFDM technologies may allow users to move around within a local coverage area, and still remain connected to the network
+Products using the IEEE 802.11 WLAN standards are marketed under the Wi-fi brand name.
+-Wireless ad hoc network
+A Wireless ad hon network, also known as a wireless mesh network or mobile ad hoc network(MANET), is a wireless network made up of radio nodes organized in a mesh topology.
+-Wireless MAN
+-Wireless WAN
+wireless wide area networks are wireless networks that typically cover large areas, such as between neighboring towns and cities, or city and suburb. These networks can be used to connect branch offices of business or as a public Internet access system.
+The wireless connections between access points are usually point to point microwave links parabolic dishes on the 2.4GHz and 5.8Ghz band, rather than omnidirectional antennas used with smaller networks.
+iv)Wireless Standards
+SSID (Service Set Identifier) is a unique name that identifies a specific wireless network. It is also sometimes referred to as a "network name". When you scan for available Wi-Fi networks on your device, you see a list of SSIDs for the networks that your device can detect.
+
+BSSID (Basic Service Set Identifier) is a unique identifier for a wireless access point (AP) in a Wi-Fi network. It is also sometimes referred to as a "MAC address". The BSSID is used to identify a specific AP when multiple APs are operating within range of each other.
+
+ESSID (Extended Service Set Identifier) is a term used to describe a collection of interconnected wireless networks that share the same SSID. This is typically seen in larger Wi-Fi deployments where multiple APs are used to provide coverage over a larger area. When multiple APs are used to cover a larger area, they can be configured with the same SSID so that clients can seamlessly roam between APs without needing to manually switch networks. The ESSID is used to identify the collection of interconnected wireless networks that share the same SSID.
+
+If SSID of the network is changed, reconfiguration of the SSID on every host is required, as every user of the network configures the SSID into their system.
+A non-secure access mode allows clients to connect to the access point using the configured SSID, a blank SSID, or an SSID configured as "any"
+Security concerns arise when the default values are not changed, as these units can be compromised.
+The SSID remains secret only on the closed networks with no ctivity, tht is inconvenient to the legitimate users.
+v)Service Sets
+vi)WiFi Encryptions and WEP
+-Types of Wireless Encryption
+WEP:
+WEP is an encryption algorithm for IEEE 802.11 wireless networks
+It is an old and original wireless security standard which can be cracked easily.
+WPA:
+It is an advanced wireless encryption protocol using TKIP, MIC and AES encryption.
+Uses a 48 bit IV, 32 bit CRC and TKIP encryption for wireless security.
+WPA2:
+WPA2 uses AES(128 bit) and CCMP for encryption.
+EAP:
+Supports multiple authentication methods, such as token cards, Kerberos, certificates etc
+WPA2 Enterprise:
+It integrates EAP standards with WPA2 encryption
+TKIP:
+A security protocol used in WPA as a replacement for WEP
+CCMP:
+CCMP utilizes 128-bit keys, with a 48-bit initialization vector(IV) for replay detection.
+AES:
+It is symmetric-key encryption, used in WPA2 as a replacement of TKIP.
+802.11i:
+It is an IEEE amendment that specifies security mechanisms for 802.11 wireless networks.
+RADIUS:
+It is a centralized authentication and authorization management system
+LEAP:
+It is a proprietary WLAN authentication protocol by Cisco.
+-WEP Encryptiom
+Wired Equivalent Privacy(WEP)is an IEEE 802.11 wireless protocol which provides security algorithms for data confidentiality during wireless transmissions.
+WEP uses a 24-bit initialization vector(IV) to form stream cipher RC4 for confidentiality, and the CRC-32 checksum for integrity of wireless transmission.
+-WEP encryption can be easily cracked
+WEP (Wired Equivalent Privacy) is a security protocol used to protect wireless networks. It was developed as part of the original IEEE 802.11 standard for wireless LANs. While WEP is no longer considered secure, it is still used in some older devices and networks.
+
+WEP uses a shared secret key to encrypt data that is transmitted over a wireless network. The key is shared between the wireless access point (AP) and the wireless client, such as a laptop or mobile device.
+
+The encryption algorithm used in WEP is called RC4 (Rivest Cipher 4). The RC4 algorithm generates a pseudo-random stream of bits, which is combined with the plaintext data to produce ciphertext. The same key and algorithm are used for both encryption and decryption.
+
+WEP provides two modes of operation: Open System Authentication and Shared Key Authentication.
+
+In Open System Authentication, any device can connect to the wireless network without authentication. The network administrator can choose to enable encryption, in which case the WEP key is used to encrypt data.
+
+In Shared Key Authentication, the wireless client must first authenticate with the access point using a challenge-response mechanism. The access point sends a random challenge to the client, which must encrypt it using the WEP key and send it back. If the access point can decrypt the response using the same WEP key, the client is authenticated.
+
+Once authenticated, the access point and client use the WEP key to encrypt and decrypt data. The key is usually 64 or 128 bits in length, and can be entered as a sequence of hexadecimal digits (0-9, A-F).
+
+However, WEP has several security flaws that make it vulnerable to attacks, such as the use of a weak Initialization Vector (IV), the predictable nature of the RC4 algorithm, and the limited key length. As a result, WEP is no longer considered a secure encryption method and has been replaced by more robust protocols such as WPA and WPA2.
+vii)WPA and WPA2
+Wifi protected Access(WPA) is a data encryption method for WLANs based on 802.11 standards.
+It is a snapshot of 802.11i(under development) providing stronger encryption, and enabling PSK or EAP authentication.
+-TKIP(Temporal Key Integrity Protocol)
+TKIP utilizes the RC4 stream ciper encryption with 128-bit keys and 64-bit MIC integrity check.
+TKIP mitigated vulnerability by increasing the size of the IV and using mixing functions.
+-128-bit Temporal Key
+Under TKIP, the client starts with a 128-bit "temporal key"(TK) that is then combined with the client's MAC address and an IV to create a keystream that is used to encrypt data via the RC4
+It implements a sequence counter to protect against replay attacks.
+-WPA Enhances WEP:
+TKIP enhances WEP by adding a rekeying mechanism to provide fresh encryption and integrity keys.
+Temporal keys are changed for every 10000 packets. This makes TKIP more resistant to cryptanalytic attacks involving key reuse.
+-WPA2:
+based on 802.11i, uses AES, key management, reply
+attack protection, and data integrity, most secure, CCMP included,
+WPA2 ENTERPRISE Mode - uses RADIUS account lockout if a
+password-cracker is used
+viii)WEP vs WPA vs WPA2
+ix)WiFi Authentication
+In Open System Authentication, any device can connect to the wireless network without authentication. The network administrator can choose to enable encryption, in which case the WEP key is used to encrypt data.
+
+In Shared Key Authentication, the wireless client must first authenticate with the access point using a challenge-response mechanism. The access point sends a random challenge to the client, which must encrypt it using the WEP key and send it back. If the access point can decrypt the response using the same WEP key, the client is authenticated.
+x)4 Way Handshake
+EAP-based 4-way handshake(with WPA/WPA2)
+The Pairwise Master Key(PMK) is something a hacker would like to collect, in order to break the network encryption scheme. PMK is only known to the Supplicant and Authenticator, but is not shared anywhere in transit.
+HOWEVER, the session keys are the combination of ANonce, SNonce, PMK, MAC addresses of Supplicant and Authenticator. We may write that relation, as the mathmatical formula-
+Session_keys = f(ANonce, SNonce, PMK, A_MAC, S_MAC)
+In order to derive a PMK from that equation, one would have to break AES/RC4.
+It is definitely a recommended authentication approach to use, and definitely safer than using Open Authentication.
+
+The 4-way handshake is a key establishment protocol used in Wi-Fi networks that use WPA and WPA2 security protocols. It is used to establish a secure connection between a client device and an access point.
+
+Here are the steps involved in the 4-way handshake:
+
+The client device sends a connection request to the access point, which responds with a message containing a random nonce (a one-time use number).
+
+The client device uses the pre-shared key (PSK) or enterprise credentials to generate a Pairwise Master Key (PMK). The PMK is a shared secret key that is used to derive the actual keys used for encryption and decryption.
+
+The client device generates its own random nonce and uses it, along with the access point's nonce and the PMK, to create a message called the "message integrity check" (MIC). The MIC is a cryptographic checksum that ensures the message has not been tampered with.
+
+The access point receives the MIC from the client device and performs the same calculation using the received nonce, its own nonce, and the PMK. If the calculated MIC matches the one received from the client device, the access point knows that the client has the correct PMK and is allowed to join the network.
+
+Once the 4-way handshake is completed successfully, the client and access point use the PMK to generate unique session keys that are used for encrypting and decrypting data transmitted over the wireless network. The session keys are periodically changed to provide additional security.
+xi)WiFi Protected Setup
+Wi-Fi Protected Setup (WPS) is a network security standard designed to make it easier to secure wireless home networks. It was introduced in 2006 by the Wi-Fi Alliance, a non-profit organization that promotes Wi-Fi technology and certifies Wi-Fi products.
+
+WPS allows users to connect devices to a wireless network without entering a long and complex password or key. Instead, it uses a push-button or PIN-based authentication method.
+
+There are two types of WPS authentication methods:
+
+Push-button method: This method requires physical access to the wireless access point or router. The user presses the WPS button on the router, which initiates a 2-minute window during which new devices can be connected to the network without the need for a password.
+
+PIN-based method: This method requires the user to enter an 8-digit PIN into the device they want to connect to the network. The router generates a temporary 8-digit PIN that the user must enter into their device. If the PIN matches, the device is allowed to join the network.
+
+WPS is intended to simplify the process of connecting new devices to a Wi-Fi network, but it has some security weaknesses that make it vulnerable to attacks. For example, the PIN-based method can be cracked by brute-force attacks, where an attacker tries all possible PINs until the correct one is found. Additionally, some routers have a WPS vulnerability that allows an attacker to gain access to the network by exploiting a flaw in the WPS protocol. For these reasons, WPS is no longer recommended as a secure way to connect to a Wi-Fi network, and it has been disabled on many newer routers.
+xii)How to Break Encryptions
+xiii)WLAN Threats 1
+-Access Control attack
+Very well-known access control mechanism used in wireless networks is based on MAC address whitelisting. The AP stores a list of authorized MAC addresses that are eligible to access the wireless network. With tools available nowadays, this security mechanism is not a very strong one, sine MAC address may be spoofed very simply.
+   The only challenge is to find out what MAC addresses are allowed by AP to authenticate to the network. But since wireless medium is a shared one, anyone can sniff tha traffic flowing through the air and see the MAC addresses in the frames with valid data traffic(they are visible in the header that is not encrypted)
+-Integrity attack
+Suppose that legitimate client called victim(Step 1) is writing an e-mail to the friend asking for money of $1000 and putting bank account number in the e-mail.
+Assuming the information is not well encrypted(or attacker broke the encryption and have the chance of reading everything in clear text), wireless attacker reads the whole packet flowing in the air to the AP. The attacker modifies a message by swapping the bank account number to its own and re-inject a message back to the air, to go to the internet via the AP.
+In that situation, if there are no integrity checks that would detect a change in the content of the message - the recipient would get a message with a modified bank account number.
+-Confidentiality attacks
+No Encryption/WEP Encryption
+TKIP Encryption
+CCMP Encryption
+-Availability Attacks
+Layer1 DOS:
+A radio card is configures to send out a constant RF signal(much like a narrow-band signal generator). While other valid wireless clients never get a chance of accessing the medium, because whennever they perform a clear channel assessment, the wireless medium is occupied by this constant transmitter.
+Similar to the de-authentication attacks with aireplay-ng.
+-Layer 3 DOS:
+Fraggle Attack
+Ping Flood Attack
+Smurf Attack
+xiv)WLAN Threats 2
+By sniffing the 4 way handshake between the client and the authentication(AP), one may perform a brute-force to break the encryption and derive the PSK value.
+LEAP(Lightweight Extensible Authentiation Protocol) generates dynamic WEP keys. In this setup, the password  hashes were flowing over-the-air hashed with MS-CHAP or MS-CHAPv2 algorithms. Attack that may be applied to LEAP would consist of the following steps:
+The username is sent in a clear text
+There is a challenge text in clear text
+The response text is hashed
+Office dictionary attack, inside "function(Password, challenge) = response" mathematical formula.
+-Rougue Access point attack
+If the network resources are exposed by a rogue access point, the following risks may be identified:
+Data theft-Corporate data may be compromised
+Data Destruction- Databases may be erased.
+Loss of Services-Network services can be disabled
+Malicious Data Insertion- An attacker may use a portal to upload viruses, key loggers or pornogaphy
+3rd party Attacks-A company wired network may be used as a launching pad for 3rd party attacks against other networks across the interet.
+-Client Misassociation:
+Your laptop remembers the list of WLANs that you were connected to in the past, and stores this list in the so-called Preferred Network List.
+A malicious hacker may bring its own wireless AP to the physical area, where you are normally using your Wi-Fi. If the signal from that AP, would be better than the one from original AP, the laptop software will mis-associate to the fake(rouge) access point provided by the hacker(Thinking it is the legitimate AP, you have used in the past).
+These kind of attacks are sometimes referred to as Honeypot AP attacks.
+-Misconfigured Access Point Attack
+Most common areas of misconfiguration, that leads to wireless cracking's are:
+Some AP configuration are left to factory defaults, like usernames and passwords or default WLAN's broadcasted(SSID) and default settings may be found in manuals of the specific vendor on the internet.
+Human Error:
+advanced security policies are configured on a set of AP across the organization, and other ones are forgotten and left with default weak security settings.
+xv)Wireless Hacking Methodology
+-Wi-Fi Discovery
+Wifi discovery is a process used to learn about WLAN presence in the environment.
+Wifi discovery process is not against any law, you are simply, passively listening to the Wi-Fi frequency bands, using your wireless client.
+Information you may look for: SSID name, received signal strength, 802.11 standard used, encryption and authentication set on WLAN, BSSID(MAC address of the AP, in case you would like create a fake AP with the same MAC address) and what channel it operates on.
+You need to use specific tools that uses wireless hardware and listens on either a 2.4GHz or a 5GHz band.
+-Wardriving
+Wardriving is the process of finding a Wireless Network(wireless network discovery) by a person in a car using their personal laptop, smartphone or other wireless client tools.
+-GPS Mapping
+There is a number of satellites that send a low-power radio signal towards the piece of earth it covers. The GPS device that you use, for example a smartphone with google maps, receives that signal from multiple satellites at the same time. The device itself combines those signals together and calculate current geographical location on earth.
+There is website ont the internet http://wigle.net that you can use to see how many WLAN's are GPA mapped. You can use this website to map GSM cellular network as well.
+-Wireless traffic analysis
+The type of data, that is vluable to collect are BSSID, WEP IV, TKIP IV, CCMP IV, EAP 4-way handshake exchange, wireless beacon frames, MAC addresses of communicating parties, etc.
+-Launch wireless attack
+Breaking WEP Encryption:
+Behind the scenes to break a WEP encryption, one has to sniff a large volume of dta packets. The next step is to get the same IV vector inside the wireless frames, and the last step is to break the WEP encryption model offline.
+Breaking WPA/WPA2 Encryption:
+One needs to sniff EAP 4-way handshake between a wireless client and the AP. Afterwards, an offline dictionary is conducted on the collected encrypted packets. Some time, you need to inject wireless de-authentication frames, forcing the wireless victim to de-authentication and then re-authenticationagain, thus sniffing the new authentication 4-way handshake.
+-Active attack
+Injecting of wireless traffic
+jamming attacks
+man-in-the-middle attack
+xvi)Setting Up your Lab
+-Antennas
+antennas are used to "translate" information flowing as an electrical signal inside the cable and into the electromagnetic field, which is used to transmit the frame over a wireless medium.
+Every wireless device has an antenna that includes a transmitter and the receiver modules.
+One of the biggest advantages of external antennas, is that they  can be configured in a so-called "monitor mode"
+These antennas on the client side are usually embedded in wireless adapters, both internal or external ones.
+-Wireless Cards Operation Modes
+Master(acting as an access point)
+Managed(client, also known as station)
+Ad hoc
+Reapeter
+Mesh
+Wi-Fi Direct
+TDLS and
+Monitor mode
+-Monitor Mode
+Monitor mode, or RFMON(Radio Frequency MONitor) mode allows a computer with a wireless network interface controller(WNIC) to monitor all traffic received on a wireless channel.
+Unlike promiscuous mode, which is also used for packet sniffing, monitor mode allows packets to be captured without having to associate with an access point or ad hoc network forst.
+Monitor mode only applies to wireless netorks, while promiscuous mode can be used on both wired nd wireless networks.
+Not all wireless cards support RFMON mode.
+-Limitation of Monitor mode
+Usually the wireless adapter is unable to transmit in monitor mode ans is restricted to a single wireless channel, though this is dependent on the wireless adapter's driver, its firmware, and features of its chipset.
+Also, in monitor mode the adapter does not check to see if the cyclic redundancy check(CRC) values are correct for packets captured, so some captured packets may be corrupted.
+-Packet injection
+Packet injection means sending data while in Monitor mode because it's a passive-only mode.
+Most of the adapters lack support of RFMON and Packet Injection for security and cost efficienct
+-Soft Ap
+SoftAP is an abbreviated term for "software enabled access point"
+xvii)Setting Up your Wireless Pentesting Environment Hands On
+airmon-ng start wlan0
+airodump-ng wlan0mon
+airplay-ng --test -a 2E:34:a7:4b:3e wlan0mon(for packet injection)
+xviii)Testing your Wireless Adapter
+xix)Monitor Mode And Packet Injection
+Monitor mode enables a wireless network card to passively capture packets without associating with an access point. Think of it like listening to people’s conversations while you walk down the street.
+
+Packet injection allows you to craft and inject or send data to wireless devices and networks nearby. Packet injection is commonly used in man-in-the-middle attacks and denial-of-service attacks.
+xx)WiFi Discovery
+netsh wlan show networks mode=bssid (to show nearest wifi)
+xirrus wifi inspector(GUI)
+xxi)Wigle.net
+Maps and database of 802.11 wireless networks, with statistics, submitted by wardrivers, netstumblers, and net huggers.
+xxii)Wireshark for Wireless Capture
+xxiii)WEP Cracking with Aircrack
+xxiv)WPA and WPA2 Cracking
+xxv)Evil Twin Attack
+xxvi)Countermeasures
+-How to detect and block Rogue AP?
+To prevent the installation of rogue access points, organizations can install wireless intrusion prevention systems to monitor the radio spectrum for unauthorized acess points.
+In order to detect rogue access points, two conditions need to be tested:
+  wheather or not the access point is in the managed access point list: compare wireless MAC address against the managed access point BSSID list.
+wheather or not it is connected to the secure network: cover different types of access point devices, bridging, NAT(router), unencrypted wireless links, encrypted wireless links.
+
+A MAC address is a unique identifier assigned to a network interface controller (NIC) for use as a network address in communications within a network segment. It is used to uniquely identify a device on a network, regardless of whether it is connected via a wired or wireless connection. In a wireless network, each wireless network interface card (NIC) has a unique MAC address.
+
+On the other hand, a BSSID is the MAC address of the wireless access point (WAP) that creates the wireless network. It is used to identify the wireless network itself, rather than any particular device connected to the network. Each wireless network has a unique BSSID, and multiple access points can be part of the same wireless network, each with their own unique BSSID.
+
+#Mobile Penetesting
+i)Introduction to mobile threads
+ii)Metasploit Hacking
+Armitage is a complement tool for Metasploit. It visualizes targets, recommends exploits, and exposes the advanced post-exploitation features. Armitage is incorporated with Kali distribution.
+Armitage is very user friendly. Its GUI has three distinct areas:
+ The area Targets lists all the machines that you have discovered and those you are working with. The hacked targets have red color with a thunderstrom on it.
+ The area Console provides a view for the folders. Just by clicking on it, you can directly navigate to the folders without using any Metasploit commands.
+ The area Modules is the section that lists the module of vulnerabilities.
+-Metasploit currently has over 547 payloads. Some of them are:
+Command shell enables users to run collection scripts or run arbitrary commands against the host
+Mererpreter enables users to control the screen of a device using VNC and to browser, upload and download files.
+Dynamic payloads enables users to evading anti-virus defense by generating unique payloads
+Static payloads enables ststic IP address/port forwarding for communication between the host and the client system.
+-Pivoting is a technique that Metasploit uses to route the traffic from a hacked computer toward other networks that are not accessible by a hacker machine.
+A network with the range 192.168.1.0/24 where the hacker machine has access,
+Another network with the range 10.10.10.0/24. It is an internal network and the hacker doesn't have access to it.
+iii) METASPLOIT HACKING Android Payload on Local Network Pratical
+iv) Introduction to Android OS
+Android is an open source and Linux-based Operating System for mobile devices such as smartphones and tablet computers. Android was developed by the open Handset Alliance, led by Google, and other companies.
+The first beta version of the Android Software Development Kit(SDK) was released by Google in 2007 where as the first commercial version, Android 1.0 was released in September 2008
+The source code for Android is available under free and open source software licenses. Google publishes most of the code under the Apache License version 2.0 and the rest, Linux kernal changes, under the GNU General Public License version 2.
+Android applications are usually developed in the java language using the Android Software Development Kit.
+v) Android Architecture
+
+vi) Android rooting
+Rooting is about obtained root access to the underlying Linux system beneath Android and thus gaining absolute control over the software that is running on the device.
+-Things that require root access on a typical Linux system--
+mounting and unmounting file systems
+starting your favorite SSH or HTTP or DHCP or DNS or proxy servers
+killing system processes, chroot-ing
+Being able to run arbitrary commands as the root allows you to do absolutely anything on a Linux/Android system.
+
+Stock OEM Android builds typically do not allow users to execute arbitrary code as root.
+The bootloader, the first piece of code executed when your device is powered on, is responsible for loading the Android OS and the recovery system and flashing a new ROM.
+Many Android devices have locked bootloaders that you would have to hack around in order to make them do anything other that boot the stock ROM.
+System recovery is the second piece of low-level code on board any Android device. It is separate from the Android userland and is typically located on its own partition; It is usually booted by the bootloader when you press a certain combination of hardware keys.
+
+However, since recovery is stored in a partition just like /system, /data, and /cache, you can replace it with a custom  recovery if you have root access in Linux / Android.
+ADB allows a PC or a Mac to connect to an Android device and perform certain operations. One such operation is to launch a simple shell on the device, using the command adb shell.
+If ro.secure=0, an ADB will run commands as the root user on the device. But if ro.secure=1, an ADB shell will run commands as an unpriviledge user on the device.
+The value of this property is set at boot time from the default.prop file in the root directory.
+vii) Introduction to android penetesting
+-Android security architecture
+Android provides these key features:
+  Robust security at the OS level through the Linux kernel
+  Mandatory app sandbox for all apps.
+  Secure interprocess communication
+  App signing
+  App-defined and user-granted permissions
+-App signing
+The developer is identified by this signature and the private key is also held by him only. The purpose of this certificate is to distinguish the authors and allow the system to grant or deny signature-level permissions.
+viii) IOS penetesting and jailbreaking
+-Android Applications Components
+Basic component
+Activity
+Intent
+Service
+Content Provider
+-Additional Components
+Fragments
+Views
+Layouts
+Resources
+ix)IOS penetesting and jailbreaking
+
+x) Setting up your testing lab
+-DIVA
+There are lots of APK files for penetration testing in Android OS but mostly we will use DIVA application.
+-Communication Toolkit
+-ADB
+Android Debug Bridge(adb) is a versatile command-line tool that lets you communicate with a device.
+The adb command facilitates a varity of device actions, such as installing and debugging apps, and it provides access to a Unix shell that you can use to run a variety of commands on a device.
+It is a client-server program that includes three components.
+
+-A client, which sends commands. The client runs on your development machine. You can invoke a client from a command-line terminal by issuing an adb command.
+A daemon(adbd), which runs commands on a device. The daemon runs as a bacjground process on each device.
+A server, which manages communication between the client and the daemon. The server runs as a background process on your development machine.
+-How adb works
+When you start an adb client, the client first checks wheather there is an adb server process already running. If there isn't, it starts the server process. When the server starts, it binds to local TCP port 5037 and listens for commands sent from adb clients--all adb clients use port 5037 to communicate with the adb server.
+The server then sets up connections to all running devices. It locates emulators by scanning odd-numberes ports in the range 5555 to 5585, the range used by the first emulators. Ehere the server finds an adb daemon(adbd), it sets up a connection to that port.
+-Reverse Engineering tools
+APKtool:
+A tool for reverse engineering 3rd party, closed, binary Android apps. It can secode resources to nearly original form and rebuild them after making some modifications.
+It also makes working with an app easier because of the project like file structure and automation of some repetitive tasks like building apk etc.
+Decompiles to Smali, can't get java source code from apk.
+-jadx
+It is a tool that produces java source code from android DEX and APK files.
+Allows you to see the app structure after decompiling
+It's licensed under Apache2.0
+If the app uses some non-ASCII characters the decompilation will fail.
+xi) Final Android Penetesting Setup
+xii) Setting Up Burpsuit
+xiii)Android Reverse Engineering
+-first method
+mv diva-beta.apk diva.zip
+unzip diva.zip
+d2j-dex2jar classes.dex
+java -jar classes-dex2jar.jar
+jd-gui
+-Second method
+apktool d diva-beta.apk
+cd diva-beta
+or
+jadx-gui diva-beta.apk
+xiv)Mobile Owasp Top 10 part 1
+-Insecuring Logging
+Logging is a method that developers use for tracing the code and watching warnings or errors.
+These logs are stored in a central repository for all the apps to have access to
+Logging any sensitive can cause this issue
+-In diva app enter credit card number
+adb shell ps | grep diva
+adb devices logcat | grep  <psid>
+-Hardcoding issues
+Developers may leave plaintext strings in the app source code containing raw data such as API keys, access tokens, passwords etc
+Wen can recover this sensitive data by simple reverse engineering the source code.
+-Insecure Data Storage1
+Developers store sensitive info in plaintext on local storage without encryption
+Ways to store data locally:
+Shared preferences
+Databases
+Temp files
+External Storage
+password are stored in plane text on:
+cat data/data/jakhar.aseem.pico/shared_prefs/jakhar.aseem.diva_preferences.xml
+-Insecure Data Storage2(username and password are stored on database in plain text)
+cat data/data/jakhar.aseem.pico/databases/ids2
+-Insecure Data Storage3(store in tmp file)
+cat data/data/jakhar.aseem.pico/uinfo327328tmp
+-Insecure Data Storage4(store in external file)
+cd mnt/sdcard/.uinfo.txt
+xv) Mobile Owasp Top 10 part 2
+-Input Validation Issues1(SQL injection)
+admin' or 1=1--
+-Input Validation Issues2(SQL injection)
+file://mnt/sdcard/.uinfo.txt
+-Access control issues1
+Developers often fail to check access control in every activity
+Android ActivityManager allows us to open any ativity with an Intent filter
+We can bypass authorization by directly opening the priviledged activity.
+am start -a jakhar.aseem.diva.action.View_CREDS (am=activity manager)
+-Access control issues2
+am shell am start -a jakhar.aseem.diva.action.View_CREDS2 -ez "check_pin" false (am=activity manager)
+-Leaking Content Provider
+A content provider is required if you need to share data between multiple applications.
+A special form of URI which starts with "content://" is assigned to each content provider
+Any app which knows this URI can insert, update, delete and query data from the database of the provider app.
+If proper security controls are not enforced in the app, that leads to leakage of information.
+xvi) Mobile security Guidelines
+-Securing Android devices
+Delete invansion Android apps that abuse your privacy
+Setup a VPN on your Android device to encrypt internet traffic
+Block ads on your Android
+Secure your SMS messages through encryption.
+Adjust your Android settings for more privacy and security.
+Turn on Google malware scanner called Play Protect for Play Store apps.
+Turn on 2-step verification
+Download password manager
+Turn off connections when you don't need them.
+Use Lockdown mode
+Stop disclosing your location
+Install Find My Device
+Prevent unknown downloads
+Check app permissions
+Always have full backups
+
+# Cryptography
+i)Introduction To Cryptography
+Study of techniques for secure communications through insecure channels
+Encryption is the transformation of data into a form in which it cannot be made sense of without the use of some key.
+Modern cryptography exists at the intersection of the disciplines of mathematics, computer science, electric engineering, communication science and physics.
+Teaches how to convert sensible data into random junk!
+-There are five primary functions of cryptography:
+Privacy/confidentiality: Ensuring that no one can read the message except the intended receiver.
+Integrity: Assuring the receiver that the received message has not been altered in any way from the original.
+Authentication: The process of proving one's identity.
+Non-repudiation: A mechanism to prove that the sender really sent this message
+Key exchange: The method by which crypto keys are shared between sender and receiver.
+ii)Cryptographic Mathematics
+In order to understand cryptography, it is necessary to have some background in two areas of mathematics
+-Number Theory
+-Abstract Algebra
+iii)Terms In Cryptography
+-Cryptographic Terms
+Plaintext:
+  Original message
+  Anyone can read
+  E.g "Alice"
+Cipher:
+  Cryptographic algorithm or function.
+  Tells how to transform plaintext into that random junk.
+Cipher Key:
+string of characters
+Cipherfunction(plaintext + cipher key) = ciphertext
+Cipher text:
+Tht random junk we got after applying cipher key on plaintext
+Unreadable, useless
+E.g, "#r4Tf2%#"
+-Encryption
+ Converting plaintext into ciphertext using cipher key.
+ Cannot be reversed without the use of the key.
+-Decryption
+ Converting ciphertext to plaintext using cipher key
+ Cannot be reversed without the use of the key
+-Hash
+ Random fixed length string
+ Irreversible one way function
+ Provides integrity
+ Eg MD5, SHA-1
+-Salt
+ Additional security
+ Eradicates brute force and cracking
+iv)Types Of Cryptography
+Symmetric key encryption, also known as shared secret encryption, involves the use of a single secret key to both encrypt and decrypt data. This means that both the sender and the recipient of the message must have access to the same key to be able to communicate securely. Examples of symmetric key algorithms include AES (Advanced Encryption Standard) and DES (Data Encryption Standard).
+
+Asymmetric key encryption, also known as public-key encryption, involves the use of two different keys - a public key and a private key - to encrypt and decrypt data. The public key is used to encrypt the data, while the private key is used to decrypt it. This means that anyone can use the public key to encrypt a message, but only the intended recipient who has the private key can decrypt it. Examples of asymmetric key algorithms include RSA (Rivest-Shamir-Adleman) and Elliptic Curve Cryptography (ECC).
+
+The main difference between symmetric and asymmetric key encryption is the number of keys used and how they are distributed. With symmetric key encryption, the same key is shared between the sender and the recipient, while with asymmetric key encryption, each party has their own unique key pair. Symmetric key encryption is generally faster and more efficient for encrypting large amounts of data, while asymmetric key encryption is generally more secure and is often used for tasks such as digital signatures, key exchange, and authentication.s
+v)Classical Cryptosystem And Substitution Cipher
+-Classical Cryptosystem
+It manipulates traditional characters i.e letters and digit directly.
+Based on symmetrical key encryption schema.s
+It is mainly based on 'security through obscurity'. The techniques employeed for coding were kept secret and only the parties involved in communication knew about them.
+It requires the entire cryptosystem for communicating confidentially.s
+Consists of two types of Ciphers:
+ -Substitution Cipher
+Any character of plain text from the given fixed set of characters is substituted by some other character from the same set or different depending on a key.
+For example with a shift of 1, A would be replaced by B, B would become C, and so on.
+-Types
+Caesar Cipher
+Monoalphabetic Cipher
+Polyalphabetic Cipher
+  Vigenere Cipher
+  Vernam Cipher
+  Playfair Cipher
+Hill Cipher
+One time Pad
+-Caesar Cipher
+The encryption process involves selecting a number, known as the "key," which represents the number of places each letter will be shifted. For example, if the key is 3, each letter in the message will be replaced with the letter that is three places down the alphabet.
+
+For instance, the letter "A" would be replaced with "D", "B" with "E", and so on. The process repeats for all letters in the message. The result is an encrypted message that can be sent securely, as only someone who knows the key can decrypt it.
+
+To decrypt the message, the recipient simply needs to shift each letter in the opposite direction, by the same number of places as the original key. In the example above, if the key was 3, the recipient would shift each letter 3 places up the alphabet to reveal the original message.
+-Monoalphabetic Cipher
+let plaintext="This is the last warning". With shift of 3,it's
+ciphertext="Wklv lv wkh odvw zduqlqj"
+-Polyalphabetic Cipher
+for example, plaintext="Banana", ciphertext="Ozipbe"
+Plaintext char to ciphertext char relationship is one to many
+Complex and more secure than monoalphabetic.
+-Playfair Cipher
+The cipher encrypts pairs of letters, rather than individual letters, making it more difficult to crack.
+
+Here are the steps to perform the Playfair Cipher encryption:
+
+Choose a keyword: Choose a keyword that you will use to create the Playfair Cipher matrix. This keyword should be a word or phrase that does not repeat any letters.
+
+Create the Playfair Cipher matrix: Create a 5x5 matrix using the keyword. Write the keyword in the first row of the matrix, and then fill the remaining spaces with the remaining letters of the alphabet, in order, skipping any letters that appear in the keyword.
+
+Preprocessing: The plaintext message is split into pairs of letters. If there is an odd number of letters, add an 'X' to the end of the message to make it even.
+
+Encrypt the message: For each pair of letters in the plaintext message, find the letters in the Playfair Cipher matrix. If the letters are in the same row, replace them with the letters to their immediate right, wrapping around to the left side of the row if necessary. If the letters are in the same column, replace them with the letters immediately below, wrapping around to the top of the column if necessary. If the letters are in different rows and columns, replace them with the letters that are in the same row but in the column of the other letter.
+Output the ciphertext: Output the encrypted pairs of letters as a string of ciphertext.
+-Vigenere Cipher
+Simple form of polyalphabetic substitution, developed by Blaise de Vigenere(16th century mathematician)
+Input: Plaintext GEEKSFORGEEKS
+Keyword AYUSH
+The given keyword is repeated in a circular manner until it matches the length of the plain text.
+vi)Transposition Cipher
+Yes, Transposition cipher does involve permutation and combination.
+
+In a transposition cipher, the characters of the plaintext are rearranged according to a certain permutation pattern, which determines the new order of the characters. The permutation pattern can be thought of as a set of instructions that tells us how to rearrange the characters, and these instructions can be represented mathematically using permutation notation.
+The number of possible permutation patterns for a given plaintext depends on the length of the plaintext. If the plaintext has n characters, there are n! (n factorial) possible ways to rearrange the characters. This means that the number of possible permutation patterns grows very quickly as the length of the plaintext increases, making it difficult for an attacker to guess the correct permutation pattern and decrypt the message.
+vii)Introduction To Modern Cryptosystem
+A stream cipher encrypts data one bit or byte at a time, generating a continuous stream of ciphertext that is XORed with the plaintext. This means that a stream cipher can encrypt data of any length and can be used for real-time applications, such as streaming audio or video. However, stream ciphers are generally less secure than block ciphers because they are susceptible to attacks such as the known plaintext attack or the stream cipher attack.
+
+On the other hand, a block cipher encrypts fixed-size blocks of plaintext at a time, usually 64 or 128 bits. The plaintext is divided into blocks, and each block is encrypted separately using a fixed key. This produces a block of ciphertext for each plaintext block. Block ciphers are generally considered to be more secure than stream ciphers because they can be designed to be resistant to attacks such as the birthday attack and differential cryptanalysis. However, block ciphers are not well-suited for encrypting large amounts of data in real-time, such as streaming video or audio, because they require padding to make the plaintext block size a multiple of the block size, which can result in significant overhead.
+viii)Shannon Theory
+The principle of confusion is based on the idea that the relationship between the plaintext and the ciphertext should be as complex and non-linear as possible. In other words, a small change in the plaintext should result in a large change in the ciphertext. This is achieved by using substitution ciphers, which replace the plaintext with symbols or characters from a different alphabet.
+
+The principle of diffusion, on the other hand, is based on the idea that each bit of the ciphertext should depend on multiple bits of the plaintext and the encryption key. This makes it more difficult for an attacker to uncover the original plaintext from the ciphertext. Diffusion is achieved by using permutation ciphers, which rearrange the order of the plaintext bits.
+ix)Fiestel Cipher
+
+
+The Feistel Cipher is a symmetric-key block cipher that was invented by Horst Feistel in the 1970s. It is a widely used cryptographic technique for encryption and decryption of data.
+
+In a Feistel Cipher, the plaintext is divided into two equal-sized blocks, and a series of identical rounds are performed on these blocks to produce the ciphertext. Each round consists of a substitution step, a permutation step, and a key mixing step.
+
+During the substitution step, the plaintext block is passed through a substitution box (S-box) that replaces each byte of the block with another byte based on a pre-defined table. This step introduces confusion in the plaintext, making it harder to decipher.
+
+During the permutation step, the bytes of the block are rearranged in a predetermined way. This step introduces diffusion, making it harder to analyze the relationship between the plaintext and ciphertext.
+
+During the key mixing step, a key is XORed with the output of the permutation step. This step introduces randomness, making it harder to decipher the ciphertext without knowledge of the key.
+
+After each round, the left and right halves of the block are swapped, and the process is repeated for a fixed number of rounds. At the end of the final round, the left and right halves of the block are swapped one last time, and the resulting ciphertext is produced.
+
+The Feistel Cipher is a widely used encryption technique and is the basis for many popular ciphers such as the Data Encryption Standard (DES) and the Advanced Encryption Standard (AES).
+x)Data Encryption Standard
+The Data Encryption Standaard(DES) is a symmetric-key block cipher published by the National Institute of Standards and Technology(NIST)
+DES is an implementation of a Feistel Cipher. It uses 16 round Feistel structure. The block size is 64-bit. Through, key length is 64bit, DES has an effective key length of 56 bits.
+DES is the archetypal block cipher - an algorithm that takes a fixed-length string of plaintext bits and transforms it into a ciphertext bitstring of the same length.
+Due to the inherent weakness of DES with today technologies, some organzation repeat the process three times(3DES) for added strength, until they can afford to update their equipment to AES capabilities.
+-Since DES is based on the Feistel Cipher, all that is required to specify DES is -
+Round function
+Key schedule
+Any additional processing - Initial and final permutation
+-DES Analysis
+The DES satisfies both the desired properties of block cipher. These two properties make cipher very strong
+Avalanche effect: A small change in plaintext results in the very great change in the ciphertext.
+Completeness: Each bit of ciphertext depends on many bits of plaintext.
+DES has proved to be a very well designed block cipher. There have been no significant cryptanalytic attacks on DES other than exhaustive key search.
+-Weakness
+Key Size: 56 bits(Exhaustive Key Search: 2^56)
+  Four keys out of 2^56 are weak: all 0s, all 1s, half 0s, half 1s
+Semi weak keys: Only two different round keys
+Possible weak keys: Only four different round keys
+-Cipher design
+ S-box: Two specifically chosen i/p can create same o/p through S-box.
+-Brute Force
+Diffie and Hellman proposed a machine costing an estimated US$20 million which could find a DES key in a single day
+The feasibility of cracking DES quickly was demonstrated in 1998 when a custom DES-cracker was build by the Electronic Frontier Foundation, at the cost of approximately US$250,000.
+The machine brute-forced a key in a little more than 2 day's worth of searching.
+xi)Double DES And Triple DES
+Triple des = three times encrypted DES,
+preferably with 3 different keys = DES-EE3. Actual key
+length = 168 bits. Uses 48 rounds of computations
+(3x16)
+
+In 3DES, the plaintext is first encrypted with one key using the DES algorithm, then the resulting ciphertext is decrypted with a second key using the same algorithm, and finally, the resulting plaintext is encrypted again with a third key using the DES algorithm. This process is known as encrypt-decrypt-encrypt (EDE).
+xii)Advanced Encryption Standard (AES)
+The most popular and widely adopted symmetric encryption algorithm. It is found at least six time faster than triple DES.
+-The features of AES are as follows:
+Symmetric key block cipher
+128-bit block data, 128/192/256-bit keys
+Stronger and faster than Triple-DES
+Provide full specification and design details
+Software implementable in C and Java
+It is based on Rjindael cipher structure or 'substitution-permutation network'.
+AES treats the 128 bits of a plaintext block as 16 bytes, aranged in four columns and four rows for processing as a matrix, called state(array)
+The number of rounds in AES is variable and depends on the length of the key
+  10 rounds for 128-bit keys
+  12 rounds for 192-bit keys and
+  14 rounds for 256-bit keys
+Till data, no practical cryptanalytic attacks against AES has been discovered.
+xiii)Block Cipher Modes Of Operation
+Cipher modes, also known as block cipher modes, are methods used in cryptography to encrypt data in blocks of fixed sizes. Cipher modes determine how these blocks are processed, transformed, and combined to create the ciphertext, which is the encrypted version of the original plaintext.
+
+There are several types of cipher modes, including:
+
+Electronic Codebook (ECB): This is the simplest and most basic cipher mode. Each block of plaintext is encrypted independently using the same key.
+
+Cipher Block Chaining (CBC): This mode uses the output of the previous block's encryption as an input to the next block. This adds an element of randomness to the encryption process and makes it harder for attackers to decrypt the ciphertext.
+
+Counter (CTR): This mode encrypts each block of plaintext using a unique counter value, which is combined with a nonce and the encryption key.
+
+Output Feedback (OFB): This mode uses the output of the previous block's encryption to generate a keystream, which is then XORed with the plaintext to produce the ciphertext.
+
+Cipher Feedback (CFB): This mode is similar to OFB, but instead of using a keystream, the output of the previous block's encryption is used to encrypt the next block.
+xiv)Stream Ciphers
+Stream ciphers are a type of encryption algorithm that operate on a stream of data, such as a continuous flow of digital data from a communication channel or a data storage device. Unlike block ciphers that encrypt fixed-size blocks of data, stream ciphers encrypt data one bit or byte at a time, in a continuous stream.
+
+Stream ciphers use a secret key and a keystream generator to encrypt and decrypt data. The keystream generator generates a stream of pseudorandom bits that are combined with the plaintext message using the XOR (exclusive OR) operation to produce the corresponding ciphertext. The same process is used to decrypt the ciphertext message to recover the original plaintext.
+
+One advantage of stream ciphers is that they can encrypt and decrypt data in real-time, which makes them suitable for applications that require high-speed encryption and decryption, such as wireless communication or audio and video streaming.
+Examples of stream ciphers include RC4 (Rivest Cipher 4),RC5, RC6 and Salsa20.
+-Stream Cipher Uses
+WEP, WPA – use WEP if you have nothing else
+RC4
+Audio Visual
+xv)What Is Public Key Cryptography And Types of Asymmetric Encryption
+ Sender and receiver have public and private keys.
+ Public to encrypt a message, private to decrypt
+ Slower than symmetric, secret key (100 to 1000)
+use in ssl,ssh,pgp, email encryption, tls, tor, mime, digital signature
+
+-Describe how RSA key pair is generated
+
+RSA key pair is generated through the following steps:
+
+Key Generation:
+A. Select two large prime numbers p and q.
+B. Calculate the product n = pq. This value is the modulus for both the public and private keys.
+C. Calculate the Euler's totient function of n, which is φ(n) = (p-1)(q-1). This value is used to find the public and private exponents.
+D. Select a random integer e such that 1 < e < φ(n) and gcd(e, φ(n)) = 1. The integer e is the public exponent.
+E. Calculate the modular inverse of e modulo φ(n), denoted d, such that (d * e) mod φ(n) = 1. The integer d is the private exponent.
+
+Key Distribution:
+A. Publish the public key, which consists of the modulus n and the public exponent e. The public key can be freely distributed to anyone who wants to send an encrypted message to the owner.
+B. Keep the private key secret. The private key consists of the modulus n and the private exponent d. It is used by the owner to decrypt messages that are encrypted using the public key.
+
+RSA key pair generation is a one-time process, and the generated keys can be used for encryption and decryption for as long as they are kept secret. The security of the RSA algorithm relies on the difficulty of factoring the large prime numbers used to generate the keys.
+xvi)Diffie Hellman Key Exchange
+The Diffie-Hellman key exchange is a cryptographic protocol used to establish a shared secret key between two parties over an insecure communication channel. The protocol was invented by Whitfield Diffie and Martin Hellman in 1976 and is considered to be one of the first examples of public-key cryptography.
+
+In the Diffie-Hellman key exchange, both parties generate a public-private key pair. Each party's public key is exchanged with the other party. Using the exchanged public keys and their own private keys, both parties then independently compute a shared secret key. The key is then used for encryption and decryption of subsequent messages between the two parties.
+
+The protocol can be vulnerable to man-in-the-middle attacks if the exchanged public keys are intercepted and modified by an attacker. To prevent this, the Diffie-Hellman key exchange is often combined with digital signatures or other secure communication protocols to provide additional security.
+xvii)Message Authentication Code
+A Message Authentication Code (MAC) is a type of cryptographic function used to provide message integrity and authenticity. A MAC is generated by combining a secret key and the contents of a message through a mathematical algorithm. The resulting MAC is a fixed-size string of bits that can be used to verify the authenticity of the message.
+
+MACs are commonly used in network security protocols to ensure that messages have not been tampered with during transmission. The recipient of a message can calculate the MAC using the same key and algorithm used by the sender. If the MACs match, the recipient can be confident that the message has not been altered in transit and that it originated from the sender who possessed the key.
+xviii)What is a Cryptographic hash function begineer's guide
+xix)Introduction to Hashing
+A hash function is a mathematical function that converts a numerical inptut value into another compressed numerical value. The input to the hash function is of arbotrary length but output is always of fixed length.
+Values returned by a hash function are called messae digest or simply hash values.
+Generally for any hash function h with input x, computation of h(x) is a fast operation.
+Computationally hash functions are much faster than a symmetric encryption.
+-Properties of hashing
+Pre-Image Resistance: This property means that it should be computationally hard to reverse a hash function]
+Second Pre-Image Resistance: This property means given an input and its hash, it should be hard to find a different input with the same hash.
+Collision Resistance: This property means it should be hard to find two different inputs of any length that result in the same hash. This property is also referred to a s collosion free hash funciton.
+-Popular Hash function
+Message Digest(MD): MD2, MD4, MD5 and MD6. It was adopted as Internet Standard RFC 1321. It is a 128-bit hash function. In 2004, collisions were found in MD5, and an analytical attack was reported to be successful only in an hour by using computer cluster.
+Secure Hash Function(SHA): SHA-0, SHA-1, SHA-2 and SHA-3. SHA-2 family has four further SHA variants, SHA-224, SA-256, SHA-384 and SHA-512. No successful attacks have yet been reported on SHA-2 hash function.
+-Application of Hash function
+Password Storage
+Data Integrity Check(Digital Signatures)
+File integrity checking
+xx)Guide to Digital Signature and digital certificates
+https://www.webnic.cc/cyber-security/understand-what-is-a-digital-signature-and-its-benefits/
+xxi)Digital Signature and Certificate
+Digital signatures are the public-key primitives of message authentication
+A digital signature ia a technique that binds a person/entity to the digital data
+Provides authentication, non-repudiation and integrity
+Digital certificate is issued by a trusted third party which proves sender identity to the receiver and receiver identity to the sender.
+xxii)Public Key Infrastructure(PKI)
+-Digital certificate contains:
+Name of certificate holder
+Serial number which is used to uniquely identify a certificate, the individual or the entity identified by the certificate
+Expiration dates.
+Copy of certificate holder's public key(used for decrypting messages and digital signatures)
+Digital Signature of the certificate issuing authority.
+-Certificate Authorities
+CA issues certificate to a client and assist other users to verify the certificate. The CA takes responsibility for adentifying correctly the identity of the client asking for a certificate to be issued, and ensures that the informtion contained within the certificate is correct and digitally signs it.
+-Key Functions of CA
+Generating key pairs
+Issuing digital certificates
+Publishing Certificates
+Verifying certificates
+Revocation of certificates
+xxii)Secure Sockets Layer
+Provides security to the data that is transferred between web browser and server.
+SSL is an application layer protocol developed by Netscape for managing the security of a message transmission on the internet.
+It uses RSA asymmetric(public key) encryption to encrypt data transferred over SSL connections
+It is now deprecated by it's successor, Transport Layer Security(TLS) (current version 1.3)
+-Transport Layer Security(TLS)
+TLS is a protocol to establish a secure connection between a client and a server and ensure privacy and integrity and authentication of information during transmission
+It uses the RSA algorithm with 1024 and 2048 bit strengths.
+TLS Handshake Protocol: It allows the client and server to authenticate each other, select encryption algorithm, and exchange symmetric key pair to data exchange.
+-SSl Handshake Protocol
+Handshake Protocol is used to establish sessions.
+Phase-1: Both Client and Server send hello-packets to each other. In this IP session, cipher suite and protocol version are exchanged for security purpose.
+Phase-2: Server sends his certificate and server-key-exchanged. Server ends the phase-2 by sending server-hello-end packet.
+Phase-3: In this phase client replies to the server by sending his certificate and client-exchanged-key
+Phase-4: In phase-4 Change-cipher suite occurs and after this handshake protocol ends.
+xxiii)Pretty Good Privacy
+Pretty Good Privacy (PGP) is an encryption software program that provides email and data encryption and decryption services. It was originally developed in 1991 by Phil Zimmermann, a computer scientist, as a way to protect email communications from prying eyes. PGP works by using a combination of symmetric and asymmetric encryption algorithms.
+
+PGP's asymmetric encryption uses a pair of keys, a public key that is distributed to others and a private key that is kept secret by the owner. When someone wants to send an encrypted message to the owner of the private key, they use the owner's public key to encrypt the message. Only the owner of the private key can decrypt the message using their own private key.
+xxiv)Introduction To Cryptanalysis
+Cryptanalysis is the study of analyzing cryptographic systems with the aim of finding weaknesses or vulnerabilities that could be exploited to break the encryption and reveal the original plaintext message
+Cryptanalysis involves various techniques such as frequency analysis, brute force attacks, and statistical analysis.
+
+Study of analyzing information systems in order to study the hidden aspects of the systems. Cryptanalysis is used to breach cryptographic  security systems and gain access to the contents of encrypted messages, even if the cryptographic key is unknown.
+Methods and techniques to reverse the principles of cryptography without knowing the applied algorithms and encryption key.
+Cryptanalysis includes the study of side-channel attacks that do not target weaknesses in the cryptographic algorithms themselves, but instead exploit weaknesses in their implementation.
+-Amount of information to the attacker
+Ciphertext-only: The cryptanalyst has access only to a collection of ciphertexts or codetexts.
+Known-plaintext: The attacker has a set of ciphertexts to which he knows the corresponding plaintext.
+Chosen-plaintext(chosen-ciphertext): The attacker can obtain the ciphertexts corresponding to an arbitrary set of plaintexts of his own choosing.
+Adaptive chosen-plaintext: Like a chosen-plaintext attack, except the attacker can choose subsequent plaintexts based on information learned from previous encryptions. Similarly Adaptive chosen ciphertext attack.
+-Side-channel attack:
+Attack based on information gained from the implementation of a computer system, rather than weakness in the implemented algorithm itself. Timing information, power consumption, electromagnetic leaks or even sound can provide an extra source of information, which can be exploited.
+-General
+Cache attack
+Timing attack
+Power-monitoring attack
+Electromagnetic attack
+Acoustic cryptanalysis
+Differential fault analysis
+xxv)Cryptography Hands On
+-Gui
+https://gchq.github.io/CyberChef(The Cyber Swiss Army Knife - a web app for encryption, encoding, compression and data analysis.)
+-cli
+openssl enc -aes-256-cbc -base64 -in trace.txt -out ciphertext
+openssl enc -d -aes-256-cbc -base64 -in ciphertext
+
+#Cloud Computing
+i)What is Cloud Computing Beginner's Guide
+ii)Introduction to Cloud Computing
+Cloud Computing provides us means of accessing the applications as utilities over th internet. It allows us to create, configure and customize the applications online.
+-What is cloud?
+The term cloud refers to a network or internet. In other words, we can say that cloud is something, which is present at remote location. Cloud can provide services over public and private networks WAN, LAN, VPN
+Applications such as e-mail, web conferencing, customer relationship management(CRM) execute on cloud.
+-What is cloud computing?
+Cloud computing refers to manipulating, configuring and accessing the hardware and software resources remotely. It offers online data storage, infrastructure and application
+Cloud computing offers platform independency, as the software is not required to be installed locally on the PC. Hence, the cloud computing is making our business applications mobile and collaborative.
+types:
+Public Cloud: It allows systems and services to be easily accessible to the general public. Public cloud may be less secure because of its openness.
+Private Cloud: It allows systems and services to be accessible within an organization, It is more secured because of its private nature.
+Community Cloud: It allows systems and services to be accessible by a group of organizations.
+Hybrid Cloud: It is a mixture of public and private cloud, in which the critical acivities are performed using private cloud while the non-critical activities are performed using public cloud.
+iii)Cloud Service Models
+The service model of cloud computing refers to the different levels of services that cloud computing providers offer to their customers. The three primary service models are Software as a Service (SaaS), Platform as a Service (PaaS), and Infrastructure as a Service (IaaS).
+
+Software as a Service (SaaS):
+This is the highest level of service where the provider offers a complete application or software that the customer can use. The provider is responsible for all the aspects of the application such as maintenance, upgrades, and security. Examples of SaaS include Google Apps, Salesforce, and Dropbox.
+
+Platform as a Service (PaaS):
+This level of service provides a platform that the customers can use to develop, run, and manage their own applications. The provider is responsible for maintaining the platform, while the customer is responsible for managing the applications. Examples of PaaS include Google App Engine, Microsoft Azure, and Heroku.
+
+Infrastructure as a Service (IaaS):
+This is the lowest level of service where the provider offers virtualized computing resources such as servers, storage, and networking. The customer is responsible for managing the operating system, applications, and data. Examples of IaaS include Amazon Web Services, Microsoft Azure, and Google Compute Engine.
+iv) Benefits and Limitations of Cloud
+One can access, manipulate and configure the applications online at any time.
+It does not require to install a software to access or manipulate cloud application.
+it is highly scalable in terms of bandwidth and performance and upto 100% uptime.
+Cloud Computing offers on-demand self-service. The resources can be used without interaction with cloud service provider.
+Cloud Computing is highly cost effective and operates at highly efficency with optimin utilization.
+Offers virtualization
+Cloud Computing offers load balancing that makes it more reliable.
+-Risk related to cloud computing
+Security and privacy:
+It is always a risk to handover the sensitive information to cloud service providers.
+Any sign of security breach may result in loss of customers and businesses.
+Lock In:
+It is very difficult for the customers to switch from one Cloud Service Provider(CSP) to another. It results in dependency on a particular CSP for service.
+Isolation Failure(Multi-tenancy):
+This risk involves the failure of isolation mechanism that separates storage, memory and routing between the different tenants.
+Management Interface Compromise:
+In case of public cloud provider, the customer management interfaces are accessible through the internet.
+Insecure or Incomplete Data Deletion:
+It is possible that the data requested for deletion may not get deleted. it happens because extra copies of data are stored but are not available at the time of deletion.
+-Virtualization
+Virtualization is a technique, which allows to share single physical instance of an application or resource among multiple organizations or tenants(customers). It does this by assigning a logical name to a physical  resource and providing a pointer to that physical resource when demanded.
+v) Cloud Computing Threats
+-lack of visibility
+An organization's cloud-based resources are located outside of the corporate network and run on infrastructure that the company does not own.
+Some organization lack cloud-focused security tools. This can limit an organization ability to monitor their cloud-based resources and protect them against attack.
+-Insecure Interfaces/API
+CSPs often provide a number of well documented application programming interfaces(APIs) and interfaces for their customers.
+The documentation designed for the customers can also be used by a cybercriminal to identify and exploit potential methods for accessing and exfiltrating sensitive data.
+-Data breaches:
+A data breach typically occurs when a business is attacked by cybercriminals who are able to gain unauthorized access to the cloud network or utilize programs to view, copy and transmit data.
+Losing data can violate the general data protection regulation(GDPR), which could cause your business to face heavy fines.
+-Denial of service
+-Insider threaths
+-Hijacking accounts
+-Insecure applications/Misconfigurations
+-Inadequate training
+-cryptojacking
+You need computing power, and cybercriminals have found methods of accessing cloud computing systems and then using their computing power to mine for cryptocurrency, such as Bitcoins.
+vi) Introduction to cloud security
+Cloud computing security or more simply, cloud security refers to a broad set of policies, technologies, applications and controls utilized to protect virtualized IP, data, applications, services and the associated infrastructure of cloud computing.It is a sub-domain of computer security, network security and more broadly information security.
+According to a recent Cloud Security Alliance report, insider attacks are the sixth biggest threat in cloud computing
+Virtualization alters the relationship between the OS and underlying hardware.
+-by gpt4
+Cloud security refers to the set of policies, procedures, technologies, and controls that are put in place to protect data, applications, and infrastructure in cloud computing environments. Cloud security is critical because cloud computing involves storing and accessing data and applications over the internet, which creates new security risks that must be addressed.
+
+There are several unique security challenges associated with cloud computing, such as data breaches, insider threats, data loss, and compliance violations. To mitigate these risks, cloud service providers typically implement a range of security measures, including data encryption, access controls, identity and access management, network security, and intrusion detection and prevention.
+vii) Amazon AWS Walkthough
+viii) AWS Identity and access Management(IAM)
+
+ix) AWS Cloudtrail and Cloudwatch
+AWS Identity and Access Management (IAM) is a service that enables you to manage access to AWS resources securely. With IAM, you can create and manage AWS users, groups, and roles, as well as assign permissions to these entities. IAM provides centralized control over AWS account resources and helps you to manage user access to these resources. IAM enables you to create policies that determine what actions users or groups can perform on AWS resources, and IAM also provides security features such as multi-factor authentication (MFA) and password policies.
+
+AWS CloudTrail is a service that enables you to log, continuously monitor, and retain account activity related to actions across your AWS infrastructure. CloudTrail captures API calls and related events made by or on behalf of an AWS account, storing this data in an S3 bucket. The data can then be analyzed to gain insight into user and resource activity, and to identify potential security risks.
+
+AWS CloudWatch is a monitoring service for AWS resources and the applications you run on them. You can use CloudWatch to collect and track metrics, collect and monitor log files, and set alarms. CloudWatch provides visibility into resource utilization, operational performance, and overall health, and you can use CloudWatch to take automated actions in response to changes in your AWS resources.
+
+In summary, IAM is focused on controlling access to AWS resources, CloudTrail is focused on logging and monitoring actions taken on those resources, and CloudWatch is focused on monitoring the performance and health of AWS resources and applications.
+
+#Digital Forensics
+i)Introduction To Digital Forensics
+Digital forensics is the practice of preserving, analyzing, and presenting electronic data in a manner that is admissible in a court of law. It is a branch of forensic science that involves the investigation and recovery of digital evidence from computers, mobile devices, and other digital storage media.
+
+Digital forensics is used to investigate a wide range of crimes, including cybercrime, fraud, intellectual property theft, and hacking. It involves the use of specialized software tools and techniques to extract and analyze data from digital devices, as well as the expertise of digital forensic professionals to interpret the results.
+
+The goal of digital forensics is to identify and preserve evidence that can be used in legal proceedings, and to provide answers to questions such as who, what, when, where, why, and how. Digital forensics can also be used for incident response, risk assessment, and proactive measures to prevent future incidents.
+ii)Computer Forensics
+Computer forensics is a branch of digital forensic science pertaining to evidence found in computers and digital storage media.
+According to Steve Hailey, "The preservation, identification, extraction, interpretation and documentation of computer evidence, to include the rules of evidence, legal processes, integrity of evidence, factual reporting of the information found and providing expert opinion in a court of law or other legal and/or administrative proceeding as to what was found."
+Computer forensics is equivalent of surveying a crime scene or performing an autopsy on a victim.
+-For recovering:
+Deleted
+Encrypted or,
+Corrupted files from a system
+-Role of cyber forensics in tracking cyber criminals
+Identifying the crime
+Gathering the evidence
+building a chain of custody
+analyzing the evidence
+presenting the evidence
+Testifying
+Prosecution
+-Computer Forensics Methodology
+Acquire evidence without modification or corruption
+Authentication that the recovered evidence is same as the originally seized data
+Analyze data without any alterations.
+iii)Investigation Process And Incident Response
+Identification: Detecting/identifying the event/crime
+Preservation: Chain of Evidence, Documentation
+Collection: Data recovery, evidence collection
+Examination: Tracing, Filtering, Extraction hidden data
+Analysis: Analyzing evidence
+Presentation: Investigation report, Expert witness
+Decision: Report22
+-Incident Response
+Computer security incident is defined as "Any real or suspected adverse event in relation to the security of computer systems or computer networks"
+It also includes external threats such as gaining access to systems, disrupting their services through malicious spamming, execution of malicious codes that destroy or corrupt systems.
+-How to Identify an Incident?
+A system alarm from an intrusion detection tool indicating security breach
+Suspicious entries in network
+Accounting gaps of several minutes with no accounting log.
+Other events like unsuccessful login attempts, unexplained new user or files, attempts to write system files, modification or deleting of data.
+Unusual usage patterns, such as programs being compiled in the account of users who are non-programmers.
+-Whom to report an incident?
+The incident should be reported to the CERT Coordination center, site security manager and other site.
+It can also be reported to law enforcement agencies such as FBI, USSS Electronic crimes branch or Department of Defense Contractors.
+-Incident Reporting
+Intensity of the security breach
+Circumstances, which revealed vulnerability
+Shortcomings in the design and impact or level of weakness.
+Entry logs related to intruder's activity.
+Specific help needed should be clearly defined.
+Correct time-zone of the region and synchronization information of the system with national time server via NTP(Network Time Protocol)
+iv)Hard Disk, Boot Sequence, MBR And Registry
+-Hard Disks
+A rapidly spinning platter is used as the recording medium. Heads just above the surface of the platter are used to read data from and write data to the platter. A standard interface connects a hard disk to a computer. Two common interfaces are IDE and SCSI.
+-Characteristics:
+Capacity of the hard disk
+Interface used
+Speed in rotations per minute
+Seek time
+Access time
+Transfer time
+-Image
+https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/images/Chapter10/10_01_DiskMechanism.jpg
+-Hard Disk Interfaces
+Small computer system interface(SCSI): Allows a user to connect 15 peripheral devices to one PCI board known as a SCSI host adapter, which is plugged into the motherboard.
+Integrated drive electronics/enhanced IDE(IDE/EIDE): Connects hard disk drives, optical dics drivers, and tape drives to personal computers. With this type of interface, the drive controller is built into the motherboard.
+Univarsal Serial Bus(USB): Connects peripheral devices such as hard disks, modems, printers, digitizers and data gloves to a computer.
+-Advanced technology attachment(ATA): This type of interface comes in two forms:
+Serial ATA: This provides a point-to-point channel between the motherboard and thr drive.
+Parallel ATA: This provides a communications channel between the drive and the computer on which data can travel only one way at a time.
+-Fiber Channel: A point-to-point bidirectional serial interface that supports up to 1.0625 Gbps transfer rates.
+-MBR(Master Boot Record):
+The master boot record(MBR) is the first sector of a data storage device such as a hard disk.
+Also called the master partition table, it includes a table that contains information about each partition that the hard disk has been formatted into. The boot sector of a storage device that contains the code for bootstrapping a system.
+Bootstrapping is the process by which a small program actually initializes the operating system installed on a computer. In DOS and Windows systems, a user can create the MBR with the fdisk/mbr command.
+
+-GUID Partition Table(GPT)
+It can fulfill limitation of MBR
+New standard, Works with UEFI BIOS, new H/W
+Supports upto 128 primary partitions
+Support upto zettabytes of disk space
+Support data integrity check(CRC) and inherent recovery
+Supported in x64 architecture for Windows(starting Server 2003 SP1), and both for Linux
+More robust than MBR
+-Registry Data
+The Registry Editor is a powerful tool in Microsoft Windows that allows you to view, edit, and manage settings and configuration information stored in the Windows Registry. The Registry contains configuration settings for the operating system, installed applications, and hardware devices.
+
+Here are some common uses of the Registry Editor:
+
+Changing System Settings: You can use the Registry Editor to modify settings that control the behavior of the Windows operating system, such as startup settings, user interface settings, and security settings.
+
+Modifying Application Settings: The Registry Editor can be used to modify settings for individual applications installed on your computer. For example, you can change the default file association for a particular file type.
+-The window registry contains a set of predefined keys:
+HKEY_CURRENT_USER: It is abbreviated HKCU and can be scanned for information about the configuration of the user currently logged in.
+HKEY_USERS: HKEY_CURRENT_USER is a subkey of HKEY_USERS. It can be checked for all the user profiles loaded on the computer.
+HKEY_LOCAL_MACHINE: It is abbreviated HKLM and can be searched for the configuration information of a particular compute.
+HKEY_CLASSES_ROOT: It is a subkey of HKEY_LOCAL_MACHINE\Software.The information stored in this key ensures that the correct program opens when a file is opened in Windows Explorer.
+HKEY_CURRENT_CONFIG: This key contains data about the hardware profile used by the local computer at start-up.
+-Boot Sequence
+Boot Loader: A boot loader or boot manager is a program that loads the operating system into a computer's memory when the system is booted. Multiple-stage boot loaders-where a number of small programs call each other, adn the last program loads the operating system are-common.
+Boot Sector: A boot sector is a memory sector of a hard disk, floppy disk or similar data storage device tht contains code for bootstrapping systems. The boot sector on a disk is always the first sector on the first track.
+-Basic System Boot Process:
+The system clock generates a series of clock ticks, which initializes the CPU.
+The CPU looks to the system's startup program in the ROM BIOS for its first instruction.
+The first instruction is to run the power-on self-test(POST), in a predetermined memory address.
+POST checks the BIOS chip and then tests CMOS RAM. CMOS(complementary metal-oxide semiconductor) memory holds the system date, time and setup parameters.
+v)Windows Forensics
+-Volatile Information
+Volatile Information is information that is lost the moment a system is powered down or loses power. Volatile information usually exists in physical memory, RAM
+System time
+Logged-on user
+Open files
+Network information
+Network connections
+Process information
+Process-to-port mapping
+Process memory
+Network status
+Clipboard contents
+Service/driver information
+Command history
+Mapped drives
+Shares
+-Non-Volatile Information
+Non-Volatile Information is kept on secondary storage devices and persists after a system is powered down. It is nonperishable and can be collected after the volatile information is collected.
+Hidden files
+Slack space
+Swap files
+Index.dat files
+Metadata
+Hidden ADS(alternate data streamss)
+Windows Search index
+Unallocated clusters
+Unused partitions
+Hidden partitions
+Registry settings
+Connected device
+Registry structure within a hive file
+Mounted device
+Finding userss
+vi)Linux And Mobile Forensics
+
+vii)Introduction To Autopsy
+Autopsy® is a digital forensics platform and graphical interface to The Sleuth Kit® and other digital forensics tools
+viii)Autopsy Analyzing VM Disk
+ix)FTKImager Image Acquisition
+Quickly assess electronic evidence by obtaining forensic images of computer data, without making changes to the original evidence, all with FTK® Imager!
+x)Guymager
+Guymager  is a Qt-based forensic imager. It is capable of producing im-
+       age files in EWF, AFF and dd format. Its main  strenghs  are  the  easy
+       user  interface,  the  high  imaging speed and the extended acquisition
+       info file.
+xi)DD Command
+The "dd" command is a versatile command-line utility in Linux that can be used for a variety of purposes, such as copying and converting files, creating disk images, backing up and restoring disks or partitions, and more.
+
+The basic syntax for the "dd" command is as follows:
+dd [options] if=input_file of=output_file
+where "if" stands for input file, and "of" stands for output file.
+Some common uses of the "dd" command include:
+
+Copying the contents of one file to another file:
+dd if=input_file of=output_file
+Creating a disk image:
+dd if=/dev/sda of=disk_image.img
+xii)Foremost Data Recovery
+The foremost command is a data recovery tool used to extract various types of files from a disk image or a device. It is commonly used in digital forensics investigations to recover deleted or damaged files.
+
+When you run the foremost command, it reads through the input file or device sector by sector, searching for known file headers or signatures. When a header is found, foremost will extract the file associated with that header to a specified output directory.
+
+By default, foremost can recover files such as JPEG images, PNG images, PDF documents, ZIP archives, and many others. It can also be configured to search for specific file types or exclude certain file types from the recovery process.
+xiii)Bulk Extractor
+bulk_extractor /home/usertest/image_20122020.E01 -o result_1
+bulk_extractor is a C++ program that scans a disk image, a file, or a directory of files and extracts useful information without parsing the file system or file system structures. The results are stored in feature files that can be easily inspected, parsed, or processed with automated tools. bulk_extractor also creates histograms of features that it finds, as features that are more common tend to be more important.
+xiv)Forensic Reporting
+-Reporting
+When an investigation is completed the information is often reported in a form suitable for non-technical individuals.
+Reports may also include audit information and other meta-documentation
+When completed, reports are usually passed to those commissioning the investigation, such as law enforcement(for criminal cases) or the employing company(in civil cases), who will then decide wheather to use the evidence in court.
+Generally, the report package will consist of a written expert conclusion of the evidence as well as the evidence itself.
+
+#Bug hunting and penetesting
+i)Get Started in Bug Bounty | Beginner’s Guide | Bug Hunting Methodology
+ii)Introduction To Pentesting
+Black Box Testing:
+In black box testing, the tester is not given any knowledge about the internal working of the system being tested. The tester only tests the software based on the requirements and specifications. The focus is on the inputs and outputs, and the software is treated as a black box. The goal is to verify the functionality of the system from a user's perspective, without any knowledge of how the system works internally.
+
+Grey Box Testing:
+In grey box testing, the tester has partial knowledge about the internal workings of the system being tested. This knowledge is used to design test cases that simulate real-world scenarios. This approach is used when the tester has some knowledge of the internal workings of the system, but not enough to perform white box testing. The goal is to test the system with a more comprehensive approach, taking into account the internal logic and processes that the software may follow.
+
+White Box Testing:
+In white box testing, the tester has complete knowledge about the internal workings of the system being tested. The tester knows the internal logic and structure of the software, including the code and architecture. This approach is used to test the system's internal functionality, including its algorithms, data structures, and internal control flows. The goal is to identify defects that are specific to the internal workings of the system.
+
+Red teaming involves simulating a cyber attack by an adversary in order to identify vulnerabilities and weaknesses in an organization's defenses. The "red team" is typically composed of cybersecurity experts who use a variety of techniques to test the effectiveness of an organization's security measures. This may include social engineering tactics, penetration testing, and other methods to gain unauthorized access to systems or data.
+
+Blue teaming, on the other hand, involves the defenders who are responsible for protecting an organization's systems and data. The "blue team" typically includes IT and security professionals who work together to monitor and respond to potential threats. They use tools such as intrusion detection systems, firewalls, and security information and event management (SIEM) solutions to detect and respond to attacks in real time.
+
+In summary, red teaming involves attacking an organization's defenses to identify weaknesses, while blue teaming involves defending against those attacks and improving the organization's security posture. Both approaches are important for effective cybersecurity and risk management.
+iii)Requirements Of A Pentester
+
+iv)Bug Bounty And Pentesting Methodology
+v)How to choose your First Bounty Program? | Things to Remember | Beginner’s Guide
+vi)Bug Bounty Report Writing
+vii)Bug Bounty Report Samples
+viii)Ethics And Standards And BB Tips
+ix)Bugcrowd Walkthrough
+
+#Bonus section
+i)Port Scanning: Introduction to Masscan
+
+ii)Windows Remote Command Execution: PSexec and wmic
+iii)Active Directory Attacks: Pass-The-Hash
+iv)Active Directory Attacks: Golden Ticket
+v)Post Exploitation: Port Pivot Relay
+vi)Packet Capturing: Introduction to TCPDump
+vii)Cryptography: Introduction to Modern Hashing
+viii)Digital Forensics: Memory Forensics with Volatility
