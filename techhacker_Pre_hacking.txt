@@ -1,0 +1,342 @@
+I started this course in march 12, monday
+#1 Introduction
+i) Introduction to information security
+data has no context, information does. computer is data. this is my computer is information. Enigma Machine which was used by Germans to encrypt warfare data.
+Information security is a broad term that refers to the protection of all types of information.
+Cybersecurity, on the other hand, specifically focuses on protecting digital information and assets from cyber threats such as hacking, malware, phishing, and other forms of cyber attacks. Cybersecurity includes measures such as firewalls, antivirus software, intrusion detection and prevention systems, and encryption to protect against cyber threats.
+
+ii)Information security thread
+Security threats, also known as cybersecurity threats, are potential attacks or risks that can compromise the confidentiality, integrity, or availability of information or systems.
+
+iii)Introduction to Cyber Security
+   Objective of cyber security Confidentiality, Integrity, Availability, Non-repudiation, Authenticity, Privacy, Compliance
+
+iV) The CIA Triad
+v) Who are hacker
+Introduced in the 1960s, the term "Hacker",  at MIT.
+That time was of more hardcore programming
+All started by the end of 1960s, when ARPANET(Advanced Research Projects Agencies Network) was founded by the US militiary
+
+vi) types of hacker
+vii) Introduction to Ethical Hacking
+viii) Information Warfare
+Information warfare is an operation conducted in order to gain an information advantage over the opponent.
+example of Warfare:
+PRISM is a surveillance program operated by the United States National Security Agency (NSA) that was revealed in 2013 by former NSA contractor Edward Snowden. The program allows the NSA to collect and analyze electronic communications and other data from internet companies such as Google, Facebook, Microsoft, and others.
+
+Under PRISM, the NSA is able to access data such as emails, video and voice chats, photographs, documents, and other files from the servers of these companies. The program is authorized under Section 702 of the Foreign Intelligence Surveillance Act (FISA), which allows the NSA to collect data on non-U.S. citizens located outside the United States.
+
+ix) Need of Ethical Hackers
+x)Careers in Ethical Hacking
+
+#2 Basic and Environment setup
+i) advantages and limitation of cyber security
+ii)Cyber defense
+iii) Skills of ethical hacker
+iv) Information security policy
+v) Vulnerability research
+vi) Introduction to OS Linux and it's Evolution
+Unix project started in 1969 at Bell Laboratories, in C language
+UNIX wasn't open source and collaborative, so failed to gain popularity.
+In 1991, Torvalds thought to write his own UNIX and make it freely available
+from 1992, Linux is under GNU GPL License and not available for commercial use
+vii) Major Linux distribution
+viii) Advantages of linux
+ix) linux for penetration tester
+x) Types of hackers
+xi) Phase of Ethical hacking
+xii) introduction to penetration testing
+xiii) Phase of Penetration Testing
+ix) Cyber security vs Ethical hacking
+x) Ethical Hacking law and policies
+xi) IT act 2000
+xii) Risk Management and Methodology
+xiii) Software and Hardware Requirements for Hacking Lab
+xiv) Installing and Configuring VMWare WS
+xv) Dual boot and Virtual Machine
+xvi) Chossing and Downloading Kali Distro
+xvii) Configuring VM For Kali Linux
+xviii) Installing Kali Linux 2019.4 on VMWare(New)
+xix) Virtual Network Configurations Explained – NAT vs Bridged vs Host Only vs Internal
+xx) Installating and Configuring DVWA
+xxi) Installating and Configuring bWAPP
+xxii) Installating Metasploitable on VM
+xxiii) Installing OWASP Broken Web Application on VMWare
+
+#3 Linux Refresher
+i) Introduction to Command Line
+ii) Window command Line
+iii) Linux command Line
+iv) NTFS vs FAT vs EXT
+v) Linux User Administration
+vi) Basic DOS Commands
+vii)DOS Networking Commands
+viii) Kali 2019.4 and linux file system overview
+ix) Linux Elementary Commands
+x) Linux Networking Commands
+xi) History and grep command
+xii) Working with Linux User Administration
+xiii) Linux Working with Files. Permissions and Directories
+xiv) Working with Linux File Permissions
+xv) Linux Working with Groups
+xvi) Linux Package Manager apt
+xvii) Linux Useful Files
+
+#Networking Refresher
+i) The OSI Model-Open System Interconnection
+ii)More on OSI Model-Introduction to TCP-IP Model
+iii)TCP-IP vs OSI Model-The Difference
+iv) Data Link Layer and MAC Addresses
+v) Network Layer and IP Address
+vi) Classful IP Addressing, Private and Special Addresses
+vii) Classless IP Addressing
+viii) Transport Layer
+ix) Ports and Port Addressing
+x) Proxies and Proxy Servers
+xi) Introduction to Tor
+xii) Introduction to vpn
+xiii) Remote login - SSH and Telnet
+xiv) Introduction to NAT and PortForwarding
+In a NAT configuration, a router or firewall device has both a private IP address on the internal network and a public IP address on the external network. When a device on the internal network sends a packet to a device on the external network, the router or firewall translates the source IP address of the packet from the private IP address to the public IP address before forwarding it on to the external network. Similarly, when a device on the external network sends a packet to the public IP address of the router or firewall, the router or firewall translates the destination IP address of the packet from the public IP address to the private IP address of the intended recipient device on the internal network.
+
+#Footprinting and Reconnaissance
+i) Introduction to footprinting and Objectives
+ii) Footprinting through search Engines
+iii) Intoduction to OSINT
+iv) Email Footprinting
+v) Website Footprinting
+vi) Competitive Intelligence
+vii) Internet Archive
+mirroring typically refers to the practice of creating a duplicate copy of a system or data for backup or testing purposes
+viii) wget Mirroring  // wget --mirror --convert-links --adjust-extension --no-parent --page-requisites testphp.vulnweb.php
+wget --mkEpnp testphp.vulnweb.php
+ix) Website Mirroring with httrack
+x) whois lookup
+xi) Introduction to DNS Footprinting
+xii)DNS Resources Record
+xiii) DNS Footprinting with "DNS Dumpster"
+xiv) dns.google.com
+xv) Network Footprinting
+xvi) Introduction and Working of Traceroute
+xvii) Traceroute Analysis
+xviii) Introduction to maltego
+Maltego is a data visualization and analysis tool used for investigating and mapping relationships between various entities such as people, organizations, websites, social media accounts, and more. It was developed by the South African company, Paterva
+xvix) Maltego Information Gathering with domain name
+xvx)  Maltego Information Gathering with IP address
+xx) Maltego Using the Tool Efficiently
+xxi) Maltego Tranform Hub
+xxii) Maltego Integration with Shodan
+xxiii) OSINT Framework:  OSINT framework(osintframework.com) focused on gathering information from free tools or resources.
+xxiv) theHarvester
+theHarvester is a simple to use, yet powerful tool designed to be used during the reconnaissance stage of a red
+team assessment or penetration test. It performs open source intelligence (OSINT) gathering to help determine
+a domain's external threat landscape. The tool gathers names, emails, IPs, subdomains, and URLs by using
+multiple public resources that include.
+xxv) Shodan Introduction and First Look
+xxvi) Shodan Advanced Search with Dorks
+xxvii) WhatWeb
+xxviii) Wappalyzer
+xxix) Sublist3r
+xxx) Subdomain Finder Websites
+xxxi) netdiscover==netdiscover  is  an  active/passive ARP reconnaissance tool..The "netdiscover" command in Linux is a network exploration tool that is used to discover hosts on a network. It sends ARP requests to the network and listens for responses, allowing it to build a list of hosts and their associated MAC addresses.
+
+ip:172.22.52.22 = 10101100.00010110.00110100.11011101
+subnet mask:255.255.240.0 = 11111111.11111111.11110000.00000000
+calculate the network range, you can perform a bitwise AND operation between the IP address and the netmask
+To perform a bitwise AND operation between the IP address and netmask, you need to compare each corresponding bit in the binary representation of the IP address and netmask, and set the corresponding bit in the result to 1 only if both bits are 1
+networkrange:  10101100.00010110.00110000.00000000
+decimal to binary: 172.22.48.0/20 (20 is because in subnetmask network part is 20)
+
+commandis: sudo netdiscover -r 172.22.48.0/24
+xxxii) Major IP Block:  you can find the list of all major IP address blocks allocated for each country
+https://www.nirsoft.net/countryip/
+xxxiii) GoogleDorks Explained - What is Google Hacking
+xxxiv) Working with Google Dorks - Google Dorking Practical https://www.boxpiper.com/posts/google-dork-list
+iurl. intitle, allintitle, site, filetype, intext, link, define, info, related, intext:"Index of" /"chat/logs"
+  intext:"Index of /password"  indexof:passwd
+xxxv) Footprinting with Social Engineering:  Social engineering is an art of exploiting human behavior to extract confidential information
+Eavesdropping: Unauthorized listening of conservations or reading of messages.
+  It is interception of any form of communication such as audio, video, or written.
+Shoulder surfing: Technique where attackers secretly observes the target to gain critical information.
+Dumpster Diving: Dumpster diving is looking for treasure in someone else's trash.
+xxxvi) Footprinting Countermeasures
+
+#Scanning
+i) Basic of Scanning
+ii) Scanning Methodology
+iii) Working with ping command for live hosts
+iv) Angry IP Scanner
+network scanner that allows you to scan IP addresses and ports within a network. It is designed to be fast and simple to use, and it provides a graphical user interface (GUI) that is easy to navigate.
+v) TCP Flags
+vi) TCP 3-Ways Handshake
+vii) Introduction to Port Scanning
+viii) Port Scanning Methodology
+hping3 is a network tool able to send custom ICMP/UDP/TCP packets and to display target replies like ping does with ICMP replies. It handles fragmentation and arbitrary packet body and size, and can be used to transfer files under supported protocols.
+ix) Types of Port Scanning - TCP Connect Scan
+A TCP connect scan is one of the most common types of scans performed by the Nmap network scanner. It is also known as a "full-open" scan, as it attempts to establish a full TCP connection with the target system to determine whether the port is open, closed, or filtered.
+
+During a TCP connect scan, Nmap sends a SYN packet to the target system, just like in a SYN scan, but then it waits for the target system to respond with a SYN-ACK packet. If the target system responds with a SYN-ACK packet, then Nmap sends an ACK packet to complete the three-way handshake and establish a full TCP connection. Nmap then closes the connection by sending a FIN packet.
+
+If the target system responds with a RST packet instead of a SYN-ACK packet, it means that the port is closed. If Nmap does not receive any response from the target system, it means that the port is filtered.
+
+TCP connect scans are more reliable than SYN scans, as they can detect whether a port is open or closed with greater certainty. However, they are also more likely to be detected by intrusion detection systems (IDS) and firewalls, as they leave a more complete trail in the system logs.
+x) Types of Port Scanning - TCP Steal Scan
+A TCP steal scan (also known as a TCP ACK scan or a firewall evasion scan) is a type of port scan performed by the Nmap network scanner that is designed to bypass firewalls and intrusion detection systems (IDS).
+
+During a TCP steal scan, Nmap sends an ACK (acknowledgment) packet to each port on the target system. If the port is open, the target system will respond with a RST (reset) packet, indicating that there is no active connection on that port. However, if the port is closed, the target system will not respond at all, and Nmap will assume that the port is filtered.
+
+By sending an ACK packet instead of a SYN packet, Nmap can bypass some types of firewalls and IDS that are configured to block SYN packets. This makes TCP steal scans useful for detecting open ports on systems that are protected by strict security measures.
+xi) Types of Port Scanning - TCP Syn Scan
+  A TCP SYN scan (also known as a half-open scan) is a type of port scan where the scanner sends a SYN packet to the target system's port, pretending to initiate a connection. If the port is open, the target system responds with a SYN-ACK packet, indicating that it is willing to establish a connection. The scanner then sends a RST packet to tear down the connection. If the port is closed or filtered, the target system responds with a RST packet, indicating that no connection can be established.
+xii) Types of Port Scanning - TCP Inverse Flag Scanning(-sF(fin scan), -sN(null scan))
+TCP probe packets with a TCP flag (FIN, URG, PSH) set or with no flags, no response means
+port is open and RST means the port is closed
+xiii) Types of Port Scanning - TCP Xmas Scan(-sX)
+In Xmas scan, attackers send a TCP frame to a remote device with FIN, URG, and PUSH flags set.
+xiv) Types of Port Scanning - ACK Flag Probe Scanning
+xv) Types of Port Scanning - UDP Scan
+UDP scans work by sending UDP packets to the target system's UDP ports and analyzing the responses. Since UDP is a connectionless protocol, there is no three-way handshake or connection establishment process as in TCP scans. Therefore, UDP scans rely on the target system's response to the UDP packet to determine whether the port is open, closed, or filtered.
+Spywares, Trojan horses, and other malicious application use UDP ports.
+xvi)Introduction to Nmap and First Look
+xvii)Nmap-Port Scanning
+xviii) Nmap - Advanced Port Scanning
+xix) Nmap - Bypassess Firewalls and IDS
+nmap -f $target  ()
+nmap --mtu 16 $target (maximum trasmission unit)
+nmap -D RND:16 $target(random ip)
+nmap -S 192.198.56.134 $target -e eth0 (change source ip to 192.198.56.134)
+nmap --source-port 65 $target(change source ip)
+nmap --spoof-mac 0 $target (change mac address)
+nmap -sT -PN --spoof-mac 0 $target (change mac address)
+nmap --randomize-host --data-length 40 $target
+nmap --badsum $target
+xx) Nmap Types of Scans
+xxi) Port Scanning with hping3 (very very fast)
+sudo hping3 --scan 0-65504 -S $ip
+hping3 -h (show on mode options)
+xxii) Port Scanning with penetest-tools
+xxiii) Colasoft Packet Builder (Colasoft Packet Builder(website) enables creating custom network packets)(imp for network admin)
+xxiv) Introduction to Banner Grabbing
+Banner grabing can be done from
+   -from error message
+   -from Sniffing the network traffic: capturing and analyzing packets from the target enables an attacker to determine OS used by remote system
+   -from page extensions: ex: aspx=>IIS server and Windows platform
+xxv)Banner Grabing with ID Server
+xxvi) Banner Grabbing with NetCraft: website: https://sitereport.netcraft.com/?url=https://miro.com
+xxvii) Banner Grabbing with netcat
+─$ nc -nv 99.86.47.100 80
+(UNKNOWN) [99.86.47.100] 80 (http) open
+GET / HTTP/1.1
+xxviii)Evading IDS and Firewalls
+xxix)Scanning for Vulnerabilities
+xxx) Scanning for vulnerabilities
+xxxi) NessusVulnerability Scanner
+xxxii) Nmap Scripting Engine
+xxxiii) nikto web vulnerability Scanner
+xxxiv) OpenVas Installation and Configuraion
+xxxv) Vulnerability Scanning with OpenVas
+xxxvi) Wordpress Vulnerability Scanning with wpscan
+xxxvii)Mapping Networks
+xxxviii)Network Topology Mapper (search for solarwinds)
+https://www.solarwinds.com/network-topology-mapper
+Network mapping software built to automatically plot my different network
+xxxix) SpiceworksNetwork Mapper:  free cloud-based help desk and network monitoring solution designed specifically for systems administrators and IT professionals.
+xl)LAN State Pro(Awesome tool but paid)
+10-Strike LANState
+is a simple network topology mapping, host monitoring, and management program. Monitor the service availability.
+Manage servers, computers, switches, and other devices easier using the graphic map. Access devices' properties, RDP, web UI faster
+xli) Scanning Countermeasures
+
+#Enumeration
+i) Introduction to Enumeration
+ii) Texhniques of Enumeration
+-Services and Ports to enumerate
+  -TCP/UDP: DNS Zone Transfer
+  -TCP/UDP 135: Microsoft RPC Endpoint Mapper
+  -UDP 137:NetBIOS Name Service (NBNS)
+  -TCP 139: NetBIOS Session Service (SMB over NetBIOS)
+  -TCP/UDP 445: SMB over TCP (Direct Host)
+  -UDP 161: Simple Network Management Protocol(SNMP)
+  -TCP/UDP 389: Lightweight Directory Access Protocol(LDAP)
+  -TCP/UDP 3268: Global Catalog Service
+  -TCP 25: Simple Mail Transfer Protocol(SMTP)
+  -TCP/UDP 162: SNMP Trap
+  -UDP 123:NTP(Network timing protocol)
+iii)NetBIOS enumeration
+-While NetBIOS (Network Basic Input/Output System) was widely used in the past for communication between devices on a local area network (LAN), it is not commonly used today in modern networks.
+Many modern operating systems, such as Windows 10, have deprecated NetBIOS and have moved towards using newer protocols, such as TCP/IP (Transmission Control Protocol/Internet Protocol), which offer better security and more efficient data transfer.
+-Creted by IBM, adopted by Microsoft
+*Attacker use the NetBIOS enumeration to obtain:
+  List of computers that belong to a domain
+  List of shares on the individual hosts in the network
+  Policies and passwords
+*Attackers use the NetBIOS enumeration to perform
+  -Read/Write to a shared resource depending on availability of shares
+  -Launch DOS on target
+  -Enumeration password policies
+*tool
+-Nbtstat utility in Windows displays NetBIOS over TCP/IP(NetBT) protocol statistics
+-Run nbtstat command nbtstat.exe -c to get the contents of the NetBIOS name cache, the table of NetBIOS names, and their resolved IP addresses.
+-run nbtstat -a $IP to get the NetBIOS name table of a remote computer
+iv) SMB Enumeration
+SMB stands for Server Message Block. It's a protocol for sharing resources like files, printers.run on pot 445 or 139
+To make it work for linux, you need to install samba server because linux doesnot use smb protocol
+NetBIOS is primarily used for name resolution and discovery, while SMB is used for file and printer sharing. However, because SMB relies on NetBIOS for name resolution,
+v) Working with NetBIOS and SMB Enumeration
+vi) SNMP Enumeration
+-SNMP(Simple Network Management Protocol) is an application layer which uses UDP protocol to maintain and manage  routers, hubs and switches and other network devices on an IP network
+-SNMP enumertion is used to enumerate user accounts, passwords, groups, system names, devices on a target system.
+-SNMP operates by using a client-server model. The client, also known as the manager, sends requests to the server, also known as the agent. The agent responds to these requests with information about the status and configuration of the device.
+ SNMP uses a hierarchical structure called the Management Information Base (MIB) to organize information about network devices. This makes it easy for network administrators to locate and manage specific devices on the network.
+vi) LDAP Enumeration(port 389)
+LDAP (Lightweight Directory Access Protocol) is a networking protocol used for accessing and managing directory information services. It is a protocol used to access and maintain distributed directory information services over an Internet Protocol (IP) network.
+LDAP provides a standard way to access and manage directory information, such as user and group information, network resources, and other information in a centralized directory. LDAP directories are hierarchical and organized in a tree-like structure.
+ LDAP is often used in conjunction with other protocols, such as Kerberos or SSL, to provide secure authentication and communication.
+vii) SMTP Enumeration
+Smtp provides 3 build-in-commands:
+-VRFY:Validates users
+-EXPN: Tells the actual delivery addresses of aliases and mailing lists
+-RCPT TO:Defines the recipients of the message
+Attacker can directly interact with SMTP via telnet prompt and collect list of valid users on the SMTP server.
+viii) Working with SMTP Enumeration
+nmap 192.168.30.128 -p 25 -sV --script=smtp-enum-users
+telnet -4 192.168.30.128 25
+msfconsole
+options
+set RHOSTS 192.168.30.128
+exploit
+ix) DNS Enumeration
+x) Introduction to DNS Zones
+xi) Introduction to DNS Zone Transfer
+The serial number in the DNS SOA (Start of Authority) record is used to track changes to the zone file. When changes are made to the zone file, the serial number in the SOA record should be incremented to indicate that a new version of the zone file is available.
+So, while the serial number increment is an important event in the zone file update process, it does not automatically trigger a zone transfer. The zone transfer is initiated by the secondary DNS server when it detects that the serial number on the primary DNS server is higher than the one it has stored locally.
+xii) DNS Zone Transfer using host command
+host -l zonetransfer.me nsztm1.digi.ninja
+xiii) nslookup tool
+nslookup
+>set type=cname
+>google.com
+>set type=A
+>google.com
+xiv)DNS zone transfer using nslookup
+nslookup
+> server nsztm1.digi.ninja
+Default Server:  nsztm1.digi.ninja
+Address:  81.4.108.41
+> set type=any
+> ls -d zonetransfer.me
+xv)dig command
+xvi)DNS Zone Transfer using dig command
+dig axfr @nsztm1.digi.ninja zonetransfer.me (asyncronos transfer)
+xvii) NTP Enumeration  NTP Suite is used for NTP enumeration.
+NTP stands for Network Time Protocol, which is a protocol used to synchronize the time of a computer or a network of computers to a reference time source.
+
+The reference time source used by NTP is typically an atomic clock or a GPS time signal, which provides a very accurate and reliable source of time information. NTP can be used to synchronize the clock of a client computer to a server on the internet, or within a local network, and can be used for a variety of purposes, such as ensuring that timestamps in network communications are accurate, or for time-sensitive applications such as financial trading, where accurate timing is critical.
+
+NTP uses a hierarchical system of time servers to ensure that time information is accurate and reliable, and it can also compensate for network latency and other factors that can affect time synchronization. NTP operates over UDP port 123 and is commonly used on both Windows and Unix-based systems.
+
+Attacker queries NTP server to gather valuable information such as:
+-List of hosts connected to NTP server
+-Clients IP addresses in a network, their system names and OS
+-Internal IPs can also be obtained if NTP server is in the DMZ
+xviii) Enumeration Countermeasures
